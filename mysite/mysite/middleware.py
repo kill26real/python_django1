@@ -1,11 +1,10 @@
 from django.http import HttpRequest
-from django.utils import timezone
 from datetime import timedelta as td
-from django.core.cache import cache
+import datetime
+import os
 
 
 def setup_useragent_on_request_middleware(get_response):
-
     def middleware(request: HttpRequest):
         request.user_agent = request.META['HTTP_USER_AGENT']
         response = get_response(request)
@@ -16,7 +15,6 @@ def setup_useragent_on_request_middleware(get_response):
 
 
 def trottling_middleware(get_response):
-
     def middleware(request: HttpRequest):
 
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -25,16 +23,29 @@ def trottling_middleware(get_response):
         else:
             client_ip = request.META.get('REMOTE_ADDR')
 
-        last_activity = cache.get_or_set(f'ip:{client_ip}', 0, 60)
+        now_sec = datetime.datetime.now().timestamp()
 
-        too_old_time = timezone.now() - td(seconds=60)
-        if not last_activity or last_activity < too_old_time:
-            response = get_response(request)
+        last_activity = ''
+        if f'{client_ip}_last_request.txt' in os.listdir():
+            with open(f'{client_ip}_last_request.txt', 'r') as file:
+                last_activity = file.read()
+                print(last_activity)
+        else:
+            with open(f'{client_ip}_last_request.txt', 'w') as file:
+                file.write(str(now_sec))
+
+        response = get_response(request)
+
+        too_old_time = now_sec - 30
+        if not last_activity or float(last_activity) < too_old_time:
+            with open(f'{client_ip}_last_request.txt', 'w') as file:
+                file.write(str(now_sec))
             return response
         else:
-            raise Exception
+            raise PermissionError
 
     return middleware
+
 
 class CountRequestsMiddleware:
     def __init__(self, get_response):

@@ -49,9 +49,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'requestdataapp.middleware.setup_useragent_on_request_middleware',
-    'requestdataapp.middleware.CountRequestsMiddleware',
-    'requestdataapp.middleware.trottling_middleware',
+    'mysite.middleware.setup_useragent_on_request_middleware',
+    'mysite.middleware.CountRequestsMiddleware',
+    'mysite.middleware.trottling_middleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
