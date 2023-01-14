@@ -14,37 +14,37 @@ def setup_useragent_on_request_middleware(get_response):
     return middleware
 
 
-def trottling_middleware(get_response):
-    def middleware(request: HttpRequest):
-
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            client_ip = x_forwarded_for.split(',')[0]
-        else:
-            client_ip = request.META.get('REMOTE_ADDR')
-
-        now_sec = datetime.datetime.now().timestamp()
-
-        last_activity = ''
-        if f'{client_ip}_last_request.txt' in os.listdir():
-            with open(f'{client_ip}_last_request.txt', 'r') as file:
-                last_activity = file.read()
-                print(last_activity)
-        else:
-            with open(f'{client_ip}_last_request.txt', 'w') as file:
-                file.write(str(now_sec))
-
-        response = get_response(request)
-
-        too_old_time = now_sec - 30
-        if not last_activity or float(last_activity) < too_old_time:
-            with open(f'{client_ip}_last_request.txt', 'w') as file:
-                file.write(str(now_sec))
-            return response
-        else:
-            raise PermissionError
-
-    return middleware
+# def trottling_middleware(get_response):
+#     def middleware(request: HttpRequest):
+#
+#         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#         if x_forwarded_for:
+#             client_ip = x_forwarded_for.split(',')[0]
+#         else:
+#             client_ip = request.META.get('REMOTE_ADDR')
+#
+#         now_sec = datetime.datetime.now().timestamp()
+#
+#         last_activity = ''
+#         if f'{client_ip}_last_request.txt' in os.listdir():
+#             with open(f'{client_ip}_last_request.txt', 'r') as file:
+#                 last_activity = file.read()
+#                 print(last_activity)
+#         else:
+#             with open(f'{client_ip}_last_request.txt', 'w') as file:
+#                 file.write(str(now_sec))
+#
+#         response = get_response(request)
+#
+#         too_old_time = now_sec - 30
+#         if not last_activity or float(last_activity) < too_old_time:
+#             with open(f'{client_ip}_last_request.txt', 'w') as file:
+#                 file.write(str(now_sec))
+#             return response
+#         else:
+#             raise PermissionError
+#
+#     return middleware
 
 
 class CountRequestsMiddleware:

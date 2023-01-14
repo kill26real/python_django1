@@ -11,9 +11,9 @@
     {% endif %}
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>
-        <input type="file" name="myfile">
-    </p>
+
+        {{ form.as_p }}
+
     <button type="submit">Upload</button>
     </form>
 {% endblock %}
