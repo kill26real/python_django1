@@ -2,6 +2,7 @@ from django import forms
 from django.core import validators
 from .models import Product, Order
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 
 
 # class ProductForm(forms.Form):
@@ -28,11 +29,7 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = 'user', 'delivery_adress', 'promocode', 'products'
 
-# class OrderForm(forms.Form):
-#     user = forms.CharField()
-#     promocode = forms.CharField(max_length=100)
-#     delivery_adress = forms.CharField(
-#         label='Delivery adress',
-#         widget=forms.Textarea(attrs={'rows':5, 'cols': '30'}),
-#     )
-#     products = forms.ModelMultipleChoiceField(queryset=Product.objects.all())
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name']

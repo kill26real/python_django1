@@ -9,7 +9,7 @@
     {% if products %}
         <div>
         {% for product in products %}
-            <p>Name: {{ product.name }}</p>
+            <p>Name: <a href="{% url 'shopapp:product-details' pk=product.pk %}">{{ product.name }}</a></p>
             <p>Price: {{ product.price }}</p>
             <p>Discount: {% firstof product.discount 'no discount' %}</p>
         {% endfor %}
@@ -25,29 +25,3 @@
         </a>
     </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
