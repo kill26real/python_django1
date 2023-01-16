@@ -61,8 +61,11 @@ def create_order(request: HttpRequest):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
+            # TODO тут находится список выбранных объектов товаров: form.cleaned_data['products']
+            # instance = form.save()  todo сохраняем в базу запись заказа
+            # instance.products.add(*form.cleaned_data['products'])  todo добавляем записи в "промежуточную" таблицу
             # name = form.cleaned_data['name']
-            Order.objects.create(**form.cleaned_data)
+            Order.objects.create(**form.cleaned_data)  # TODO убираем
             # form.save()
             url = reverse('shopapp:orders-list')
             return redirect(url)
