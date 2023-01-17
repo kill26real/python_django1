@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        {% block title %}
-        
-        {% endblock %}
-    </title>
+{% extends 'userapp/base.html' %}
+
+{% block title %}
+    Main Page
+{% endblock %}
+
+{% block body %}
     {% if request.user.is_authenticated %}
         <h2>Добро пожаловать на сайт {{ request.user.username }}</h2>
         <a href="{% url 'userapp:another_logout' %}">Выйти</a>
@@ -14,16 +12,10 @@
         <h2>Вы неавторизованы на нашем сайте</h2>
         <a href="{% url 'userapp:another_login' %}">Войти</a>
     {% endif %}
-</head>
-<body>
-{% block body %}
+
+    <h1>This is main page</h1>
+
+    <p><a href="{% url 'shopapp:products-list' %}">Продукты</a></p>
+    <p><a href="{% url 'shopapp:orders-list' %}">Заказы</a></p>
 
 {% endblock %}
-
-<br>
-<div>
-    HTTP User-Agent {{ request.user_agent }}
-</div>
-
-</body>
-</html>
