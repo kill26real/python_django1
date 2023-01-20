@@ -11,13 +11,26 @@
     <p>Описание: {{ news.text }}</p>
     <p>Автор: {{ news.user }}</p>
     <p>Время создания: {{ news.published_at }}</p>
-
-{#            {% for comment in new.comments %}#}
-{#                <h3>Комментарий #{{ comment.pk }}</h3>#}
-{#                <p>{{ comment.text }}</p>#}
-{#                <p>Автор: {{ comment.user }}</p>#}
-{#                <p>Дата публикации: {{ coment.created_at }}</p>#}
-{#            {% endfor %}#}
+    {% if comments %}
+        <h2>Комментарии:</h2>
+        {% for comment in comments %}
+            <h3>Комментарий #{{ comment.pk }}</h3>
+            <p>{{ comment.text }}</p>
+            <p>Автор: {{ comment.user }}</p>
+            <p>Дата публикации: {{ coment.published_at }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Комментариев пока что нет</p>
+    {% endif %}
+    </div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                Добавить комментарий
+            </button>
+        </form>
     </div>
 
     <div>
@@ -25,9 +38,5 @@
             Вернуться к новостям
         </a>
     </div>
-    <br>
-    <br>
-    <div>
-        <a href="{% url 'main' %}">Вернуться на главную страницу</a>
-    </div>
+
 {% endblock %}
