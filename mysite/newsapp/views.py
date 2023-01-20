@@ -20,7 +20,7 @@ class NewsCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        super(NewsCreateView, self).form_valid(form)
+        super(NewsCreateView, self).form_valid(form)  # TODO метод должен вернуть это значение, добавьте  return перед super(...)
 
 
 
@@ -62,9 +62,9 @@ def create_news(request: HttpRequest):
         form = NewsForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.user_id = request.user
+            instance.user_id = request.user  # TODO надо из объекта пользователя получить значение поля id: instance.user_id = request.user.id
             instance.save()
-            News.objects.create(**form.cleaned_data)
+            News.objects.create(**form.cleaned_data)  # TODO это попытка создать туже новость повторно, это ошибка, уберите эту строку
             url = reverse('newsapp:news-list')
             return redirect(url)
     else:
