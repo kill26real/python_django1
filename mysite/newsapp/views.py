@@ -47,9 +47,11 @@ class NewsDetailView(DetailView):
         if form.is_valid():
             form.save(commit=False)
             form.instance.user_id = self.request.user.id
-            form.instance.new_id = self.object.id
+            form.instance.new_id = self.object.id  # TODO на данном этапе self.object ещё не создан, но тут он и не
+                                            # нужен, id текущей новости передаются через параметр pk, используйте его
             form.save()
-        return reverse(
+        return reverse(  # TODO вернуть надо не ссылку, а объект "ответа", например так:
+                         #  redirect(everse('newsapp:news-details',kwargs={'pk': pk},))
             'newsapp:news-details',
             kwargs={'pk': pk},
         )
