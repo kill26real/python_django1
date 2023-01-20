@@ -1,16 +1,16 @@
 {% extends 'userapp/base.html' %}
 
 {% block title %}
-    Login
+    Регистрация
 {% endblock %}
 
 
 {% block body %}
-    <h1>Страница входа</h1>
+    <h1>Регистрация</h1>
     <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <button type="submit">Sign up</button>
     </form>
     <a href="{% url 'main' %}">Выйти в главное меню</a>
 {% endblock %}

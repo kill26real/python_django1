@@ -6,16 +6,21 @@
 
 {% block body %}
     {% if request.user.is_authenticated %}
-        <h2>Добро пожаловать на сайт {{ request.user.username }}</h2>
-        <a href="{% url 'userapp:another_logout' %}">Выйти</a>
+        <h2>Добро пожаловать на сайт {{ request.user.first_name }}</h2>
+        <p>День рождения: {{ request.user.profile.date_of_birth }}</p>
+        <p>Город: {% firstof  request.user.profile.city 'город не указан' %}</p>
+        <p>Номер телефона: {% firstof  request.user.profile.phone_number 'номер телефона не указан' %}</p>
+        <a href="{% url 'userapp:logout' %}">Выйти</a>
     {% else %}
         <h2>Вы неавторизованы на нашем сайте</h2>
-        <a href="{% url 'userapp:another_login' %}">Войти</a>
+        <a href="{% url 'userapp:login' %}">Войти</a>
+        <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
     {% endif %}
 
     <h1>This is main page</h1>
 
     <p><a href="{% url 'shopapp:products-list' %}">Продукты</a></p>
     <p><a href="{% url 'shopapp:orders-list' %}">Заказы</a></p>
+    <p><a href="{% url 'newsapp:news-list' %}">Новости</a></p>
 
 {% endblock %}

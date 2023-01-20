@@ -23,4 +23,6 @@ urlpatterns = [
     path('shop/', include('shopapp.urls')),
     path('req/', include('requestdataapp.urls')),
     path('user/', include('userapp.urls')),
+    path('emp/', include('employmentapp.urls')),
+    path('news/', include('newsapp.urls')),
 ]

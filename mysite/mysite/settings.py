@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'shopapp.apps.ShopappConfig',
     'requestdataapp.apps.RequestdataappConfig',
     'userapp.apps.AppusersConfig',
+    'employmentapp.apps.EmploymentappConfig',
+    'newsapp.apps.NewsappConfig',
 ]
 
 MIDDLEWARE = [

@@ -9,10 +9,11 @@
     </title>
     {% if request.user.is_authenticated %}
         <h2>Добро пожаловать на сайт {{ request.user.username }}</h2>
-        <a href="{% url 'userapp:another_logout' %}">Выйти</a>
+        <a href="{% url 'userapp:logout' %}">Выйти</a>
     {% else %}
         <h2>Вы неавторизованы на нашем сайте</h2>
-        <a href="{% url 'userapp:another_login' %}">Войти</a>
+        <a href="{% url 'userapp:login' %}">Войти</a>
+        <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
     {% endif %}
 </head>
 <body>

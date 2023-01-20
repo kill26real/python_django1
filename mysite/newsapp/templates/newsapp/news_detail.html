@@ -1,0 +1,33 @@
+{% extends 'newsapp/base.html' %}
+
+{% block title %}
+    News Details
+{% endblock %}
+
+{% block body %}
+    <div>
+    <h1>Новости:</h1>
+    <p>Заголовок: {{ news.title }}</p>
+    <p>Описание: {{ news.text }}</p>
+    <p>Автор: {{ news.user }}</p>
+    <p>Время создания: {{ news.published_at }}</p>
+
+{#            {% for comment in new.comments %}#}
+{#                <h3>Комментарий #{{ comment.pk }}</h3>#}
+{#                <p>{{ comment.text }}</p>#}
+{#                <p>Автор: {{ comment.user }}</p>#}
+{#                <p>Дата публикации: {{ coment.created_at }}</p>#}
+{#            {% endfor %}#}
+    </div>
+
+    <div>
+        <a href="{% url 'newsapp:news-list' %}">
+            Вернуться к новостям
+        </a>
+    </div>
+    <br>
+    <br>
+    <div>
+        <a href="{% url 'main' %}">Вернуться на главную страницу</a>
+    </div>
+{% endblock %}

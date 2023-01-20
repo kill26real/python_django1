@@ -1,0 +1,31 @@
+{% extends 'newsapp/base.html' %}
+
+{% block title %}
+    News list
+{% endblock %}
+
+{% block body %}
+    <h1>Новости:</h1>
+    {% if news %}
+        <div>
+        {% for new in news %}
+            <p><a href="{% url 'newsapp:news-details' pk=new.pk %}">{{ new.title }}</a></p>
+            <p>Автор: {% firstof new.user.first_name new.user.username %}</p>
+        {% endfor %}
+
+        </div>
+    {% else %}
+        <h3>Ещё нет новостей</h3>
+    {% endif %}
+    
+    <div>
+        <a href="{% url 'newsapp:news-create' %}">
+            Создать новость
+        </a>
+    </div>
+    <br>
+    <br>
+    <div>
+        <a href="{% url 'main' %}">Вернуться на главную страницу</a>
+    </div>
+{% endblock %}
