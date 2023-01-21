@@ -1,23 +1,23 @@
 {% extends 'newsapp/base.html' %}
 
+
 {% block title %}
     News Details
 {% endblock %}
 
 {% block body %}
     <div>
-    <h1>Новости:</h1>
-    <p>Заголовок: {{ news.title }}</p>
-    <p>Описание: {{ news.text }}</p>
+    <p><h2>{{ news.title }}</h2></p>
+    <p><h3>Описание: {{ news.text }}</h3></p>
     <p>Автор: {{ news.user }}</p>
     <p>Время создания: {{ news.published_at }}</p>
     {% if comments %}
-        <h2>Комментарии:</h2>
+        <h3>Комментарии:</h3>
         {% for comment in comments %}
-            <h3>Комментарий #{{ comment.pk }}</h3>
-            <p>{{ comment.text }}</p>
+            <p><h4>{{ comment.text }}</h4></p>
             <p>Автор: {{ comment.user }}</p>
-            <p>Дата публикации: {{ coment.published_at }}</p>
+            <p>Дата публикации: {{ comment.published_at }}</p>
+            <br>
         {% endfor %}
     {% else %}
         <p>Комментариев пока что нет</p>
@@ -32,6 +32,8 @@
             </button>
         </form>
     </div>
+    <br>
+    <br>
 
     <div>
         <a href="{% url 'newsapp:news-list' %}">

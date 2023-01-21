@@ -7,6 +7,8 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import NewsForm, CommentForm
 from .models import News, Comment
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 
 class NewsListView(ListView):
@@ -15,19 +17,25 @@ class NewsListView(ListView):
     context_object_name = 'news'
 
 
-class NewsCreateView(CreateView):
+class NewsCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/news/error/'
+    redirect_field_name = 'redirect_to'
     model = News
     form_class = NewsForm
 
     def form_valid(self, form):
-        if self.request.user.id:
-            form.instance.user_id = self.request.user.id
-            form.save()
-            return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
-        else:
-            raise PermissionDenied('Чтобы создавать новости нужно сначало войти в систему')
+        form.instance.user_id = self.request.user.id
+        form.save()
+        return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
 
 
+
+class LoginErrorView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        context = {
+            'news': True
+        }
+        return render(request, 'newsapp/login-error.html', context=context)
 
 
 class NewsDetailView(DetailView):
@@ -43,19 +51,16 @@ class NewsDetailView(DetailView):
 
 
     def post(self, request: HttpRequest, pk):
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            form.instance.user_id = self.request.user.id
-            form.instance.new_id = self.object.id  # TODO на данном этапе self.object ещё не создан, но тут он и не
-                                            # нужен, id текущей новости передаются через параметр pk, используйте его
-            form.save()
-        return reverse(  # TODO вернуть надо не ссылку, а объект "ответа", например так:
-                         #  redirect(everse('newsapp:news-details',kwargs={'pk': pk},))
-            'newsapp:news-details',
-            kwargs={'pk': pk},
-        )
-
+        if self.request.user.id:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                form.save(commit=False)
+                form.instance.user_id = self.request.user.id
+                form.instance.new_id = pk
+                form.save()
+            return redirect(reverse('newsapp:news-details',kwargs={'pk': pk},))
+        else:
+            return redirect(reverse('newsapp:login-error'))
 
 
 

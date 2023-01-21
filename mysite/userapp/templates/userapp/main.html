@@ -6,10 +6,7 @@
 
 {% block body %}
     {% if request.user.is_authenticated %}
-        <h2>Добро пожаловать на сайт {{ request.user.first_name }}</h2>
-        <p>День рождения: {{ request.user.profile.date_of_birth }}</p>
-        <p>Город: {% firstof  request.user.profile.city 'город не указан' %}</p>
-        <p>Номер телефона: {% firstof  request.user.profile.phone_number 'номер телефона не указан' %}</p>
+        <p><a href="{% url 'userapp:account' pk=user.pk %}">Просмотреть аккаунт</a></p>
         <a href="{% url 'userapp:logout' %}">Выйти</a>
     {% else %}
         <h2>Вы неавторизованы на нашем сайте</h2>

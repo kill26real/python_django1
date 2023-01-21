@@ -5,7 +5,6 @@ from django.contrib.auth.models import Group
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from .models import Product, Order
 from .forms import ProductForm, OrderForm, GroupForm
 

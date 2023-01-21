@@ -9,15 +9,17 @@
     {% if news %}
         <div>
         {% for new in news %}
-            <p><a href="{% url 'newsapp:news-details' pk=new.pk %}">{{ new.title }}</a></p>
+            <p><h3><a href="{% url 'newsapp:news-details' pk=new.pk %}">{{ new.title }}</a></h3></p>
             <p>Автор: {% firstof new.user.first_name new.user.username %}</p>
+            <br>
         {% endfor %}
 
         </div>
     {% else %}
         <h3>Ещё нет новостей</h3>
     {% endif %}
-    
+    <br>
+    <br>
     <div>
         <a href="{% url 'newsapp:news-create' %}">
             Создать новость

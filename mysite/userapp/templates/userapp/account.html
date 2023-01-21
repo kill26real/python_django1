@@ -1,0 +1,28 @@
+{% extends 'userapp/base.html' %}
+
+{% block title %}
+    Account #{{ user.pk }}
+{% endblock %}
+
+{% block body %}
+    {% if request.user.is_authenticated %}
+        <h2>Добро пожаловать {% firstof user.first_name user.username %}</h2>
+        <p>День рождения: {{ user.profile.date_of_birth }}</p>
+        <p>Город: {% firstof  user.profile.city 'город не указан' %}</p>
+        <p>Номер телефона: {% firstof  user.profile.phone_number 'номер телефона не указан' %}</p>
+        <p>Новости: {% firstof  user.profile.news 'У вас нет еще новостей' %}</p>
+        {% if user.profile.is_varificied %}
+            <p>Вы верифицированный пользователь</p>
+        {% else %}
+            <p>Вы неверифицированный пользователь</p>
+        {% endif %}
+        <br>
+        <a href="{% url 'userapp:logout' %}">Выйти</a>
+    {% else %}
+        <h2>Вы неавторизованы на нашем сайте</h2>
+        <a href="{% url 'userapp:login' %}">Войти</a>
+        <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
+    {% endif %}
+    <br>
+    <p><a href="{% url 'main' %}">Выйти в главное меню</a></p>
+{% endblock %}
