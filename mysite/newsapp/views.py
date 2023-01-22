@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse
@@ -9,6 +9,7 @@ from .forms import NewsForm, CommentForm
 from .models import News, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser
 
 
 class NewsListView(ListView):
@@ -23,19 +24,36 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
     model = News
     form_class = NewsForm
 
+    # @permission_required('newsapp.add_news')
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
-        form.save()
-        return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
+        if self.request.user.id:
+            if self.request.user.profile.is_verificied:
+                # if not self.request.user.has_perm('newsapp.add_news'):
+                #     raise PermissionDenied()
+                form.instance.user_id = self.request.user.id
 
+                self.request.user.profile.news += 1
+
+                form.save()
+                return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
+            else:
+                return redirect(reverse('newsapp:verify-error'))
+        else:
+            return redirect(reverse('newsapp:login-error'))
 
 
 class LoginErrorView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         context = {
-            'news': True
         }
         return render(request, 'newsapp/login-error.html', context=context)
+
+
+class VerifyErrorView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        context = {
+        }
+        return render(request, 'newsapp/verify-error.html', context=context)
 
 
 class NewsDetailView(DetailView):
@@ -51,8 +69,8 @@ class NewsDetailView(DetailView):
 
 
     def post(self, request: HttpRequest, pk):
+        form = CommentForm(request.POST)
         if self.request.user.id:
-            form = CommentForm(request.POST)
             if form.is_valid():
                 form.save(commit=False)
                 form.instance.user_id = self.request.user.id
@@ -60,7 +78,12 @@ class NewsDetailView(DetailView):
                 form.save()
             return redirect(reverse('newsapp:news-details',kwargs={'pk': pk},))
         else:
-            return redirect(reverse('newsapp:login-error'))
+            if form.is_valid():
+                form.save(commit=False)
+                form.instance.user_id = 9
+                form.instance.new_id = pk
+                form.save()
+            return redirect(reverse('newsapp:news-details', kwargs={'pk': pk}, ))
 
 
 

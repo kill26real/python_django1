@@ -8,3 +8,8 @@ class Profile(models.Model):
     phone_number = models.IntegerField(null=True, blank=True)
     is_verificied = models.BooleanField(default=False)
     news = models.SmallIntegerField(default=0)
+
+    class Meta:
+        permissions = {
+            ('can_verify', 'Может верифицировать')
+        }

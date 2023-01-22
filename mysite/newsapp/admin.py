@@ -30,10 +30,15 @@ from django.contrib.auth.models import Group
 #     list_display = ['id', 'title', 'user']
 #     search_fields = ['first_name', 'last_name', 'date_of_birth', 'city', 'phone_number', 'is_verificied', 'news']
 
+@admin.action(description='publish news')
+def mark_published(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
+    queryset.update(published=True)
+
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'user']
+    actions = [mark_published,]
 
 
 

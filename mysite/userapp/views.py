@@ -39,8 +39,10 @@ def register_view(request: HttpRequest):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+
             my_group = Group.objects.get(name='Пользователи')
             my_group.user_set.add(user)
+
             login(request, user)
             return redirect('/')
     else:

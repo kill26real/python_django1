@@ -7,9 +7,11 @@ class News(models.Model):
     text = models.TextField(default='', verbose_name='Содержимое')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', blank=True)
     published_at = models.DateTimeField(verbose_name='Дата публикации', auto_now_add=True)
+    published = models.BooleanField(default=False)
+    tag = models.CharField(max_length=30, verbose_name='Тэг', blank=True)
 
     class Meta:
-        ordering = ['published_at']
+        ordering = ['tag', 'published_at']
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
         permissions = {
