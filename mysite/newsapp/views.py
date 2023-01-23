@@ -85,7 +85,8 @@ class NewsDetailView(DetailView):
         else:
             if form.is_valid():
                 form.save(commit=False)
-                form.instance.user_id = 9
+                form.instance.user_id = 9  # TODO Почему 9? А если такого пользователя нет? Это не корректно. Просто
+                                           #  оставьте пустым это поле, для чего в модели надо указать null=True, blank=True
                 form.instance.new_id = pk
                 form.save()
             return redirect(reverse('newsapp:news-details', kwargs={'pk': pk}, ))
