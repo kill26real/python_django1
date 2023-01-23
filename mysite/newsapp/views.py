@@ -14,8 +14,33 @@ from django.contrib.auth.models import AnonymousUser
 
 class NewsListView(ListView):
     template_name = 'newsapp/news-list.html'
-    queryset = News.objects.all()
     context_object_name = 'news'
+
+    # def get(self, *args, **kwargs):
+    #     resp = super().get(*args, **kwargs)
+    #     if self.request.GET.get('tag'):
+    #         tag = self.request.news.tag
+    #         resp.queryset = News.objects.all().filter(tag=tag)
+    #     else:
+    #         resp.queryset = News.objects.all()
+    #     return resp
+
+
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
+    #     if self.request.GET.get('tag'):
+    #         tag = self.request.news.tag
+    #                 queryset = News.objects.all().filter(tag=tag)
+    #             else:
+    #                 queryset = News.objects.all()
+    #     return qs.filter(tag=tag)
+
+    def get_queryset(self):
+        if self.request.GET.get('tag', None):
+            queryset = News.objects.all().filter(tag=tag)
+        else:
+            queryset = News.objects.all()
+        return queryset
 
 
 class NewsCreateView(LoginRequiredMixin, CreateView):
@@ -24,12 +49,10 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
     model = News
     form_class = NewsForm
 
-    # @permission_required('newsapp.add_news')
+
     def form_valid(self, form):
         if self.request.user.id:
             if self.request.user.profile.is_verificied:
-                # if not self.request.user.has_perm('newsapp.add_news'):
-                #     raise PermissionDenied()
                 form.instance.user_id = self.request.user.id
 
                 self.request.user.profile.news += 1

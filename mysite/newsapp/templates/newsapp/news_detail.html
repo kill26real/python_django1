@@ -11,6 +11,12 @@
     <p><h3>Описание: {{ news.text }}</h3></p>
     <p>Автор: {{ news.user }}</p>
     <p>Время создания: {{ news.published_at }}</p>
+    {% if news.tag %}
+        <a href="{% url '/news/?tag=погода' %}">
+            {{ news.tag }}
+        </a>
+
+    {% endif %}
     <br>
     {% if comments %}
         <h3>Комментарии:</h3>
