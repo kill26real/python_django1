@@ -16,28 +16,10 @@ class NewsListView(ListView):
     template_name = 'newsapp/news-list.html'
     context_object_name = 'news'
 
-    # def get(self, *args, **kwargs):
-    #     resp = super().get(*args, **kwargs)
-    #     if self.request.GET.get('tag'):
-    #         tag = self.request.news.tag
-    #         resp.queryset = News.objects.all().filter(tag=tag)
-    #     else:
-    #         resp.queryset = News.objects.all()
-    #     return resp
-
-
-    # def get_queryset(self):
-    #     qs = super().get_queryset()
-    #     if self.request.GET.get('tag'):
-    #         tag = self.request.news.tag
-    #                 queryset = News.objects.all().filter(tag=tag)
-    #             else:
-    #                 queryset = News.objects.all()
-    #     return qs.filter(tag=tag)
 
     def get_queryset(self):
         if self.request.GET.get('tag', None):
-            # TODO надо взять значение тега из запроса и передать его фильтру
+            tag = self.request.GET.get('tag')
             queryset = News.objects.all().filter(tag=tag)
         else:
             queryset = News.objects.all()
@@ -55,10 +37,8 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
         if self.request.user.id:
             if self.request.user.profile.is_verificied:
                 form.instance.user_id = self.request.user.id
-
                 self.request.user.profile.news += 1
-                # TODO а теперь сохраните запись в таблице Профиль:
-                #  self.request.user.profile.save()
+                self.request.user.profile.save()
                 form.save()
                 return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
             else:
