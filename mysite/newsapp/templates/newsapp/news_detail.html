@@ -12,7 +12,7 @@
     <p>Автор: {{ news.user }}</p>
     <p>Время создания: {{ news.published_at }}</p>
     {% if news.tag %}
-        <a href="{% url '/news/?tag=погода' %}">
+        <a href="{% url 'newsapp:news-list' %}?tag={{ news.tag }}">
             {{ news.tag }}
         </a>
 

@@ -37,6 +37,7 @@ class NewsListView(ListView):
 
     def get_queryset(self):
         if self.request.GET.get('tag', None):
+            # TODO надо взять значение тега из запроса и передать его фильтру
             queryset = News.objects.all().filter(tag=tag)
         else:
             queryset = News.objects.all()
