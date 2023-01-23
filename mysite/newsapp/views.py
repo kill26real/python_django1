@@ -33,7 +33,8 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
                 form.instance.user_id = self.request.user.id
 
                 self.request.user.profile.news += 1
-
+                # TODO а теперь сохраните запись в таблице Профиль:
+                #  self.request.user.profile.save()
                 form.save()
                 return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
             else:
