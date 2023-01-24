@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import MainView
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
@@ -25,4 +28,5 @@ urlpatterns = [
     path('user/', include('userapp.urls')),
     path('emp/', include('employmentapp.urls')),
     path('news/', include('newsapp.urls')),
-]
+    path('blog/', include('blogapp.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

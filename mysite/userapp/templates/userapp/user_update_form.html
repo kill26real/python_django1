@@ -1,0 +1,26 @@
+{% extends 'userapp/base.html' %}
+
+
+{% block title %}
+    Update user
+{% endblock %}
+
+{% block body %}
+    <h1>Обновление данных</h1>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                Обновить
+            </button>
+
+        </form>
+    </div>
+
+    <div>
+        <a href="{% url 'userapp:account' pk=user.id %}">
+            Вернуться в аккаунт
+        </a>
+    </div>
+{% endblock %}

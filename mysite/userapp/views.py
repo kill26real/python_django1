@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import DetailView
-
+from django.views.generic import DetailView, UpdateView
+from .forms import RegisterForm
 from .models import Profile
 from .forms import AuthForm, RegisterForm
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
@@ -57,6 +57,17 @@ class AccountView(DetailView):
     model = User
     context_object_name = 'user'
 
+
+class AccountUpdateView(UpdateView):
+    model = Profile
+    fields = ['name', 'surname', 'city', 'date_of_birth', 'phone_number']
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse(
+            'userapp:account',
+            kwargs={'pk': self.object.pk},
+        )
 
 # def another_logout_view(request: HttpRequest):
 #     logout(request)

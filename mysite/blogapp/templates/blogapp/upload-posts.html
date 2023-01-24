@@ -1,0 +1,27 @@
+{% extends 'blogapp/base.html' %}
+
+
+{% block title %}
+    Upload post
+{% endblock %}
+
+{% block body %}
+    <h1>Upload a new post</h1>
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                Загрузить
+            </button>
+
+        </form>
+    </div>
+    <br>
+    <br>
+    <div>
+        <a href="{% url 'blogapp:posts-list' %}">
+            Вернуться к постам
+        </a>
+    </div>
+{% endblock %}

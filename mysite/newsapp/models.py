@@ -23,7 +23,7 @@ class News(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', auto_created=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор', null=True, blank=True)
     text = models.TextField(default='', verbose_name='Комментарий')
     published_at = models.DateTimeField(verbose_name='Дата публикации', auto_now_add=True)
     new = models.ForeignKey(News, on_delete=models.CASCADE)

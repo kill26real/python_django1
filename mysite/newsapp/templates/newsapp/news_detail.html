@@ -21,15 +21,17 @@
     {% if comments %}
         <h3>Комментарии:</h3>
         {% for comment in comments %}
-            {% if comment.user.id == 9 %}
-<!--?   TODO          Проверяйте авторизацию с помощью {% if request.user.is_authenticated %}-->
-            <p><h4>{{ comment.text }}</h4></p>
-            <p>Опубликованно анонимно</p>
-            <p>Дата публикации: {{ comment.published_at }}</p>
+            {% if request.user.is_authenticated %}
+
+                <p><h4>{{ comment.text }}</h4></p>
+                <p>Автор: {{ comment.user }}</p>
+                <p>Дата публикации: {{ comment.published_at }}</p>
             {% else %}
-            <p><h4>{{ comment.text }}</h4></p>
-            <p>Автор: {{ comment.user }}</p>
-            <p>Дата публикации: {{ comment.published_at }}</p>
+
+                <p><h4>{{ comment.text }}</h4></p>
+                <p>Опубликованно анонимно</p>
+                <p>Дата публикации: {{ comment.published_at }}</p>
+
             {% endif %}
             <br>
         {% endfor %}

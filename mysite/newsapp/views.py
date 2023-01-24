@@ -33,16 +33,25 @@ class NewsCreateView(LoginRequiredMixin, CreateView):
     form_class = NewsForm
 
 
+    # def form_valid(self, form):
+    #     if self.request.user.id:
+    #         if self.request.user.profile.is_verificied:
+    #             form.instance.user_id = self.request.user.id
+    #             self.request.user.profile.news += 1
+    #             self.request.user.profile.save()
+    #             form.save()
+    #             return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
+    #         else:
+    #             return redirect(reverse('newsapp:verify-error'))
+    #     else:
+    #         return redirect(reverse('newsapp:login-error'))
     def form_valid(self, form):
         if self.request.user.id:
-            if self.request.user.profile.is_verificied:
-                form.instance.user_id = self.request.user.id
-                self.request.user.profile.news += 1
-                self.request.user.profile.save()
-                form.save()
-                return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
-            else:
-                return redirect(reverse('newsapp:verify-error'))
+            form.instance.user_id = self.request.user.id
+            self.request.user.profile.news += 1
+            self.request.user.profile.save()
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('newsapp:news-list'))
         else:
             return redirect(reverse('newsapp:login-error'))
 
@@ -85,8 +94,6 @@ class NewsDetailView(DetailView):
         else:
             if form.is_valid():
                 form.save(commit=False)
-                form.instance.user_id = 9  # TODO Почему 9? А если такого пользователя нет? Это не корректно. Просто
-                                           #  оставьте пустым это поле, для чего в модели надо указать null=True, blank=True
                 form.instance.new_id = pk
                 form.save()
             return redirect(reverse('newsapp:news-details', kwargs={'pk': pk}, ))

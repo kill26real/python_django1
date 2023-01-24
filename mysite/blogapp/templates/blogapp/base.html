@@ -1,10 +1,12 @@
-{% extends 'userapp/base.html' %}
-
-{% block title %}
-    Main Page
-{% endblock %}
-
-{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        Base Title
+        {% endblock %}
+    </title>
     {% if request.user.is_authenticated %}
         <p><a href="{% url 'userapp:account' pk=user.pk %}">Просмотреть аккаунт</a></p>
         <a href="{% url 'userapp:logout' %}">Выйти</a>
@@ -13,12 +15,22 @@
         <a href="{% url 'userapp:login' %}">Войти</a>
         <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
     {% endif %}
+</head>
+<body>
+        {% block body %}
+        Base Body
+        {% endblock %}
 
-    <h1>This is main page</h1>
+        <br>
+        <br>
 
-    <p><a href="{% url 'shopapp:products-list' %}">Продукты</a></p>
-    <p><a href="{% url 'shopapp:orders-list' %}">Заказы</a></p>
-    <p><a href="{% url 'newsapp:news-list' %}">Новости</a></p>
-    <p><a href="{% url 'blogapp:posts-list' %}">Блог</a></p>
+        <div>
+            {% now 'H:i' %}
+        </div>
 
-{% endblock %}
+        <div>
+            {% now 'l' as current_weekday %}
+            Today is {{ current_weekday }}
+        </div>
+</body>
+</html>

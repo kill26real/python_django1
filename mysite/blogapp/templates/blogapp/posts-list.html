@@ -1,0 +1,34 @@
+{% extends 'blogapp/base.html' %}
+
+{% block title %}
+    Posts list
+{% endblock %}
+
+{% block body %}
+    <h1>Посты:</h1>
+    {% if blogpost %}
+        <div>
+        {% for post in blogpost %}
+            <p>Автор: {% firstof post.user.first_name post.user.username %}</p>
+            <p>Текст: <a href="{% url 'blogapp:post-details' pk=post.pk %}">{{ post.text }}</a></p>
+        {% endfor %}
+        </div>
+    {% else %}
+        <h3>Ещё нет постов</h3>
+    {% endif %}
+    <div>
+        <a href="{% url 'blogapp:post-create' %}">
+            Написать новый пост
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'blogapp:upload-posts' %}">
+            Загрузить пост
+        </a>
+    </div>
+    <br>
+    <br>
+    <div>
+        <a href="{% url 'main' %}">Вернуться на главную страницу</a>
+    </div>
+{% endblock %}

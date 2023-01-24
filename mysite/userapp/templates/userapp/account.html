@@ -16,6 +16,7 @@
         {% else %}
             <p>Вы неверифицированный пользователь</p>
         {% endif %}
+        <p><a href="{% url 'userapp:account_update' pk=user.pk %}">Обновить данные профиля</a></p>
         <br>
         <a href="{% url 'userapp:logout' %}">Выйти</a>
     {% else %}
