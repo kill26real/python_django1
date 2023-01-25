@@ -10,7 +10,7 @@
         <div>
         {% for post in blogpost %}
             <p>Автор: {% firstof post.user.first_name post.user.username %}</p>
-            <p>Текст: <a href="{% url 'blogapp:post-details' pk=post.pk %}">{{ post.text }}</a></p>
+            <p>Текст: <a href="{% url 'blogapp:post-details' pk=post.pk %}">{{ post.text_short }}</a></p>
         {% endfor %}
         </div>
     {% else %}

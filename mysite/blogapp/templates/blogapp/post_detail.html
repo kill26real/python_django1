@@ -7,10 +7,9 @@
 
 {% block body %}
     <div>
-{#    {% for image in post.img %}#}
-{#        <p><img src="..\..\media\{{image}}" alt="Картинка блога" width="300" height="150"></p>#}
-{#    {% endfor %}#}
-    <p><img src="..\..\media\{{post.img}}" alt="Картинка блога" width="300" height="150"></p>
+    {% for image in images %}
+        <p><img src="..\..\media\{{image}}" alt="Картинка блога" width="300" height="150"></p>
+    {% endfor %}
     <p><h3>{{ post.text }}</h3></p>
     <p>Автор: {{ post.user }}</p>
     <p>Время создания: {{ post.published_at }}</p>

@@ -58,9 +58,9 @@ class AccountView(DetailView):
     context_object_name = 'user'
 
 
-class AccountUpdateView(UpdateView):
+class ProfileUpdateView(UpdateView):
     model = Profile
-    fields = ['name', 'surname', 'city', 'date_of_birth', 'phone_number']
+    fields = ['city', 'date_of_birth', 'phone_number']
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
@@ -68,6 +68,17 @@ class AccountUpdateView(UpdateView):
             'userapp:account',
             kwargs={'pk': self.object.pk},
         )
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email', 'password']
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse(
+            'userapp:account',
+            kwargs={'pk': self.object.pk},)
 
 # def another_logout_view(request: HttpRequest):
 #     logout(request)
