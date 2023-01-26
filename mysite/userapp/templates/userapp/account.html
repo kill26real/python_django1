@@ -16,6 +16,7 @@
         {% else %}
             <p>Вы неверифицированный пользователь</p>
         {% endif %}
+<!--?        Не так, ведь это же именно таблица User, поэтому  pk=user.id   -->
         <p><a href="{% url 'userapp:user_update' pk=user.profile.id %}">Обновить общие данные профиля</a></p>
         <p><a href="{% url 'userapp:profile_update' pk=user.profile.id %}">Обновить дополнительные данные профиля</a></p>
         <br>

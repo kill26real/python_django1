@@ -66,14 +66,16 @@ class ProfileUpdateView(UpdateView):
     def get_success_url(self):
         return reverse(
             'userapp:account',
-            kwargs={'pk': self.object.pk},
+            kwargs={'pk': self.object.pk},  # TODO это ссылка завязана на модель User, поэтому надо не id модели Profile
+                                            #  указать, а модели User: self.object.user.pk
         )
 
 
 class UserUpdateView(UpdateView):
     model = User
-    fields = ['username', 'first_name', 'last_name', 'email', 'password']
-    template_name_suffix = '_update_form'
+    fields = ['username', 'first_name', 'last_name', 'email', 'password']  # TODO сделайте без поля password
+    template_name_suffix = '_update_form'  # TODO так как User находится в приложении auth, то суффикс применяется к
+    # этому имени, поэтому укажите просто имя шаблона template_name = 'userapp/user_update_form.html'
 
     def get_success_url(self):
         return reverse(

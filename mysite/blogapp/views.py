@@ -72,9 +72,12 @@ def create_post(request: HttpRequest):
                 text = post_form.cleaned_data['text']
                 images = post_form.cleaned_data['img']
                 post = BlogPost.objects.create(text=text, user_id=request.user.id)
-                for image in images:
+                # for image in images:  todo точнее так:
+                for image in request.FILES.getlist('img'):
                     Image.objects.create(img=image, post=post)
                 return HttpResponseRedirect(reverse_lazy('blogapp:posts-list'))
+            else:
+                render(request, 'blogapp/post_form.html', {'form': post_form})
         else:
             return redirect(reverse('blogapp:login_error'))
     else:
