@@ -19,50 +19,6 @@ class PostsListView(ListView):
     class Meta:
         ordering=['-published_at',]
 
-    # def get_queryset(self):
-    #     queryset = BlogPost.objects.all()
-    #     for post in queryset:
-    #         if len(post.text) > 100:
-    #             queryset.post.text = queryset.post.text[:100] + '...'
-    #     return queryset
-
-# class BlogPostCreateView(LoginRequiredMixin, CreateView):
-#     login_url = '/blog/error/'
-#     redirect_field_name = 'redirect_to'
-#     model = BlogPost
-#
-#
-#     def form_valid(self, form):
-#         if self.request.user.id:
-#             text = form.cleaned_data['text']
-#             img = form.cleaned_data['img']
-#             BlogPost.objects.create(text=text, img=img, user_id=self.request.user.id)
-#             return HttpResponseRedirect(reverse_lazy('blogapp:posts-list'))
-#         else:
-#             return redirect(reverse('blogapp:login-error'))
-
-
-# def create_post(request: HttpRequest):
-#     if request.method == 'POST':
-#         if request.user.id:
-#             post_form = BlogPostForm(request.POST, instance=BlogPost())
-#             img_form = ImageForm(request.POST, request.FILES)
-#             if post_form.is_valid() and img_form.is_valid():
-#                 new_post = post_form.save(commit=False)
-#                 new_post.instance.user_id = request.user.id
-#                 new_post.save()
-#                 files = request.FILES.getlist('img')
-#                 for image in files:
-#                     new_img = img_form.save(commit=False)
-#                     new_img.post = new_post
-#                     new_img.save()
-#                 return HttpResponseRedirect(reverse_lazy('blogapp:posts-list'))
-#         else:
-#             return redirect(reverse('blogapp:login_error'))
-#     else:
-#         post_form = BlogPostForm()
-#         return render(request, 'blogapp/post_form.html', {'form': post_form})
-
 
 def create_post(request: HttpRequest):
     if request.method == 'POST':
@@ -70,9 +26,7 @@ def create_post(request: HttpRequest):
         if request.user.id:
             if post_form.is_valid():
                 text = post_form.cleaned_data['text']
-                images = post_form.cleaned_data['img']
                 post = BlogPost.objects.create(text=text, user_id=request.user.id)
-                # for image in images:  todo точнее так:
                 for image in request.FILES.getlist('img'):
                     Image.objects.create(img=image, post=post)
                 return HttpResponseRedirect(reverse_lazy('blogapp:posts-list'))
@@ -83,25 +37,6 @@ def create_post(request: HttpRequest):
     else:
         post_form = BlogPostForm()
         return render(request, 'blogapp/post_form.html', {'form': post_form})
-
-
-
-# class PostCreateView(FormView):
-#     form_class = BlogPostForm
-#     template_name = 'post_form.html'
-#     success_url = reverse_lazy('blogapp:posts-list')
-#
-#     def post(self, request, *args, **kwargs):
-#         form_class = self.get_form_class()
-#         form = self.get_form(form_class)
-#         files = request.FILES.getlist('img')
-#         if form.is_valid():
-#             form.save()
-#             for f in files:
-#                 Image.objects.create(img=f)
-#             return self.form_valid(form)
-#         else:
-#             return self.form_invalid(form)
 
 
 
