@@ -17,7 +17,7 @@
             <p>Вы неверифицированный пользователь</p>
         {% endif %}
         <p><a href="{% url 'userapp:user_update' pk=user.id %}">Обновить общие данные профиля</a></p>
-        <p><a href="{% url 'userapp:profile_update' pk=user.id %}">Обновить дополнительные данные профиля</a></p>
+        <p><a href="{% url 'userapp:profile_update' pk=user.profile.id %}">Обновить дополнительные данные профиля</a></p>
         <br>
         <a href="{% url 'userapp:logout' %}">Выйти</a>
     {% else %}
