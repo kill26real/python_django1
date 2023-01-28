@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
-from .forms import BlogPostForm, UploadPostForm, ImageForm
+from .forms import BlogPostForm, UploadPostForm
 
 
 

@@ -7,6 +7,5 @@ urlpatterns = [
     path('login-error/', LoginErrorView.as_view(), name='login_error'),
     path('create/', create_post, name='post-create'),
     path('<int:pk>/', PostDetailView.as_view(), name='post-details'),
-    path('<int:pk>/', PostDetailView.as_view(), name='post-details'),
     path('upload_posts/', upload_post, name='upload-posts'),
 ]
