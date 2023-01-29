@@ -11,7 +11,8 @@ class BlogPostTest(TestCase):
     def setUpTestData(cls):
         for i in range(NUMDER_OF_POSTS):
             post = BlogPost.objects.create(text='blog text', user_id=0)
-            Image.objects.create(post=post, img=f'{i}.jpg')
+            Image.objects.create(post=post, img=f'{i}.jpg')  # TODO вместо строки надо передать "настоящий" файл или SimpleUploadedFile
+
     def test_post_list(self):
         response = self.client.get('/blog/')
         self.assertEqual(response.status_code, 200)
@@ -22,22 +23,25 @@ class BlogPostTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(len(response.context['BlogPost_list']) == 5)
 
+
 class BlogPostCreateTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        post = BlogPost.objects.create(text='blog text', user_id=None)
+        post = BlogPost.objects.create(text='blog text', user_id=None)  # TODO создавайте посты в самих тестах с помощью self.client.post...
         Image.objects.create(post=post, img='image.jpg')
+
     def post_list_exist_at_desired_location(self):
         response = self.client.get('/blog/create/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blogapp/post_form.html')
-
+    # TODO нужны тесты на создание одиночного теста через POST-запрос, так и на создание постов из файла csv
 
 class PostDetailsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         post = BlogPost.objects.create(text='blog text', user_id=0)
         Image.objects.create(post=post, img=f'{i}.jpg')
+
     def test_post_list(self, post):
         pk = post.pk
         response = self.client.get(f'/blog/{pk}/')
@@ -45,7 +49,7 @@ class PostDetailsTest(TestCase):
         self.assertTemplateUsed(response, 'blogapp/post_detail.html')
 
 
-class BlogPostTest(TestCase):
+class BlogPostTest(TestCase):  # TODO повторное определение класса!
     def test_post_list(self):
         response = self.client.get('/blog/login_error')
         self.assertEqual(response.status_code, 200)
