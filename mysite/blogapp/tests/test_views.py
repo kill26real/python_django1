@@ -1,3 +1,4 @@
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from mysite.blogapp.views import create_post, PostsListView, PostDetailView, LoginErrorView, upload_post
 from django.urls import reverse
@@ -11,7 +12,8 @@ class BlogPostTest(TestCase):
     def setUpTestData(cls):
         for i in range(NUMDER_OF_POSTS):
             post = BlogPost.objects.create(text='blog text', user_id=0)
-            Image.objects.create(post=post, img=f'{i}.jpg')  # TODO вместо строки надо передать "настоящий" файл или SimpleUploadedFile
+            image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")
+            Image.objects.create(post=post, img=image)
 
     def test_post_list(self):
         response = self.client.get('/blog/')
@@ -25,22 +27,26 @@ class BlogPostTest(TestCase):
 
 
 class BlogPostCreateTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        post = BlogPost.objects.create(text='blog text', user_id=None)  # TODO создавайте посты в самих тестах с помощью self.client.post...
-        Image.objects.create(post=post, img='image.jpg')
-
-    def post_list_exist_at_desired_location(self):
-        response = self.client.get('/blog/create/')
+    def post_create_from_post_form(self):
+        image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")
+        data = {"img": image, 'text': 'post text'}
+        response = self.client.post("blog/create/", data, content_type="multipart/form-data")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blogapp/post_form.html')
-    # TODO нужны тесты на создание одиночного теста через POST-запрос, так и на создание постов из файла csv
+
+    def post_create_from_upload_post_form(self):
+        file = SimpleUploadedFile("posts.csv", "post_content", content_type="text/plain")
+        response = self.client.post("blog/upload/", {'file': file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blogapp/upload-posts.html')
+
 
 class PostDetailsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         post = BlogPost.objects.create(text='blog text', user_id=0)
-        Image.objects.create(post=post, img=f'{i}.jpg')
+        image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")
+        Image.objects.create(post=post, img=image)
 
     def test_post_list(self, post):
         pk = post.pk
@@ -49,7 +55,7 @@ class PostDetailsTest(TestCase):
         self.assertTemplateUsed(response, 'blogapp/post_detail.html')
 
 
-class BlogPostTest(TestCase):  # TODO повторное определение класса!
+class BlogLoginErrorTest(TestCase):
     def test_post_list(self):
         response = self.client.get('/blog/login_error')
         self.assertEqual(response.status_code, 200)
