@@ -1,9 +1,10 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from mysite.blogapp.views import create_post, PostsListView, PostDetailView, LoginErrorView, upload_post
+# TODO должно быть так from blogapp.views import create_post, PostsListView, PostDetailView, LoginErrorView, upload_post
 from django.urls import reverse
 from mysite.blogapp.models import BlogPost, Image
-
+# TODO аналогично
 
 NUMDER_OF_POSTS = 5
 
@@ -12,7 +13,7 @@ class BlogPostTest(TestCase):
     def setUpTestData(cls):
         for i in range(NUMDER_OF_POSTS):
             post = BlogPost.objects.create(text='blog text', user_id=0)
-            image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")
+            image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")  # TODO требуется битовое значение b"photo_content"
             Image.objects.create(post=post, img=image)
 
     def test_post_list(self):

@@ -1,6 +1,6 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
-from mysite.blogapp.forms import BlogPostForm, UploadPostForm
+# from django.core.files.uploadedfile import SimpleUploadedFile
+# from django.test import TestCase
+# from mysite.blogapp.forms import BlogPostForm, UploadPostForm
 
 
 # class MyTests(TestCase):
