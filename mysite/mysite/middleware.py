@@ -4,14 +4,14 @@ import datetime
 import os
 
 
-def setup_useragent_on_request_middleware(get_response):
-    def middleware(request: HttpRequest):
-        request.user_agent = request.META['HTTP_USER_AGENT']
-        response = get_response(request)
-
-        return response
-
-    return middleware
+# def setup_useragent_on_request_middleware(get_response):
+#     def middleware(request: HttpRequest):
+#         request.user_agent = request.META['HTTP_USER_AGENT']
+#         response = get_response(request)
+#
+#         return response
+#
+#     return middleware
 
 
 # def trottling_middleware(get_response):

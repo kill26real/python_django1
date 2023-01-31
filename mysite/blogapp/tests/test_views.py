@@ -1,10 +1,9 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
-from mysite.blogapp.views import create_post, PostsListView, PostDetailView, LoginErrorView, upload_post
-# TODO должно быть так from blogapp.views import create_post, PostsListView, PostDetailView, LoginErrorView, upload_post
+from blogapp.views import create_post, PostsListView, PostDetailView, LoginErrorView, upload_post
 from django.urls import reverse
-from mysite.blogapp.models import BlogPost, Image
-# TODO аналогично
+from blogapp.models import BlogPost, Image
+
 
 NUMDER_OF_POSTS = 5
 
@@ -13,7 +12,7 @@ class BlogPostTest(TestCase):
     def setUpTestData(cls):
         for i in range(NUMDER_OF_POSTS):
             post = BlogPost.objects.create(text='blog text', user_id=0)
-            image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")  # TODO требуется битовое значение b"photo_content"
+            image = SimpleUploadedFile("photo.jpg", b"photo_content", content_type="image/gif")
             Image.objects.create(post=post, img=image)
 
     def test_post_list(self):
@@ -29,14 +28,14 @@ class BlogPostTest(TestCase):
 
 class BlogPostCreateTest(TestCase):
     def post_create_from_post_form(self):
-        image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")
+        image = SimpleUploadedFile("photo.jpg", b"photo_content", content_type="image/gif")
         data = {"img": image, 'text': 'post text'}
         response = self.client.post("blog/create/", data, content_type="multipart/form-data")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blogapp/post_form.html')
 
     def post_create_from_upload_post_form(self):
-        file = SimpleUploadedFile("posts.csv", "post_content", content_type="text/plain")
+        file = SimpleUploadedFile("posts.csv", b"post_content", content_type="text/plain")
         response = self.client.post("blog/upload/", {'file': file})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blogapp/upload-posts.html')
@@ -46,7 +45,7 @@ class PostDetailsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         post = BlogPost.objects.create(text='blog text', user_id=0)
-        image = SimpleUploadedFile("photo.jpg", "photo_content", content_type="image/gif")
+        image = SimpleUploadedFile("photo.jpg", b"photo_content", content_type="image/gif")
         Image.objects.create(post=post, img=image)
 
     def test_post_list(self, post):

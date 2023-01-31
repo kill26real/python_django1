@@ -1,4 +1,5 @@
 {% extends 'blogapp/base.html' %}
+{% load i18n %}
 
 
 {% block title %}
@@ -6,13 +7,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Upload a new post</h1>
+    <h1>{% trans 'Загрузить пост' %}</h1>
     <div>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">
-                Загрузить
+                {% trans 'Загрузить' %}
             </button>
 
         </form>
@@ -21,7 +22,7 @@
     <br>
     <div>
         <a href="{% url 'blogapp:posts-list' %}">
-            Вернуться к постам
+            {% trans 'Вернуться к постам' %}
         </a>
     </div>
 {% endblock %}
