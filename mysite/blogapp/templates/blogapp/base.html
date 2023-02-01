@@ -25,7 +25,7 @@
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
             {% for language in languages %}
-                <option value="{{ language.code }}" {% if language.code==LANGUAGE_CODE %} selected="selected" {% endif %}>
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
                     {{ language.name_local }} ({{ language.code }})
                 </option>
             {% endfor %}
@@ -34,7 +34,7 @@
     </form>
 
 </head>
-<body>
+<body class="gradient">
         {% block body %}
             Base Body
         {% endblock %}
@@ -48,7 +48,7 @@
 
         <div>
             {% now 'l' as current_weekday %}
-            {% trans 'Сегодня: ' %}{{ current_weekday }}
+            {% trans 'Today: ' %}{{ current_weekday }}
         </div>
 </body>
 </html>

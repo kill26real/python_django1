@@ -7,12 +7,12 @@
 
 {% block body %}
 
-    <h3>{% trans 'Cоздавать посты могут только авторизованные пользователи! Пожалуйста авторизируйтесь по ссылке выше' %}</h3>
+    <h3>{% trans 'Posts can be created only by authorized users! Please, log in using the link above' %}</h3>
     <br>
     <br>
     <div>
         <a href="{% url 'blogapp:posts-list' %}">
-            {% trans 'Вернуться к постам' %}
+            {% trans 'Back to posts list' %}
         </a>
     </div>
 

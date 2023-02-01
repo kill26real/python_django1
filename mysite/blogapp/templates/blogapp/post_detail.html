@@ -12,15 +12,15 @@
         <p><img src="/media/{{ image.img }}" alt="Картинка блога" width="300" ></p>
     {% endfor %}
     <p><h3>{{ post.text }}</h3></p>
-    <p>{% trans 'Автор: ' %}{{ post.user }}</p>
-    <p>{% trans 'Время создания: ' %}{{ post.published_at }}</p>
+    <p>{% trans 'Author: ' %}{{ post.user }}</p>
+    <p>{% trans 'Date of create: ' %}{{ post.published_at }}</p>
     </div>
     <br>
     <br>
 
     <div>
         <a href="{% url 'blogapp:posts-list' %}">
-            {% trans 'Вернуться к постам' %}
+            {% trans 'Back to posts list' %}
         </a>
     </div>
 

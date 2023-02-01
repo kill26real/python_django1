@@ -7,13 +7,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{% trans 'Загрузить пост' %}</h1>
+    <h1>{% trans 'Upload post' %}</h1>
     <div>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">
-                {% trans 'Загрузить' %}
+                {% trans 'Upload' %}
             </button>
 
         </form>
@@ -22,7 +22,7 @@
     <br>
     <div>
         <a href="{% url 'blogapp:posts-list' %}">
-            {% trans 'Вернуться к постам' %}
+            {% trans 'Back to posts list' %}
         </a>
     </div>
 {% endblock %}

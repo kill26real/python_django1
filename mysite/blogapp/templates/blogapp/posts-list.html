@@ -6,31 +6,31 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{% trans 'Вернуться к постам' %}Посты:</h1>
+    <h1>{% trans 'Posts:' %}</h1>
     {% if blogpost %}
         <div>
         {% for post in blogpost %}
-            <p>{% trans 'Автор: ' %}{% firstof post.user.first_name post.user.username %}</p>
-            <p>{% trans 'Текст: ' %}<a href="{% url 'blogapp:post-details' pk=post.pk %}">{{ post.text_short }}</a></p>
+            <p>{% trans 'Author: ' %}{% firstof post.user.first_name post.user.username %}</p>
+            <p>{% trans 'Text: ' %}<a href="{% url 'blogapp:post-details' pk=post.pk %}">{{ post.text_short }}</a></p>
         {% endfor %}
         </div>
     {% else %}
-        <h3>{% trans 'Ещё нет постов' %}</h3>
+        <h3>{% trans 'Not posts yet' %}</h3>
     {% endif %}
     <div>
         <a href="{% url 'blogapp:post-create' %}">
-            {% trans 'Написать новый пост' %}
+            {% trans 'Create new post' %}
         </a>
     </div>
     <br>
     <div>
         <a href="{% url 'blogapp:upload-posts' %}">
-            {% trans 'Загрузить пост' %}
+            {% trans 'Upload post' %}
         </a>
     </div>
     <br>
     <br>
     <div>
-        <a href="{% url 'main' %}">{% trans 'Вернуться на главную страницу' %}</a>
+        <a href="{% url 'main' %}">{% trans 'Back to main' %}</a>
     </div>
 {% endblock %}

@@ -6,19 +6,19 @@
 
 {% block body %}
     {% if request.user.is_authenticated %}
-        <p><a href="{% url 'userapp:account' pk=user.pk %}">Просмотреть аккаунт</a></p>
+        <p class="top-title" ><a href="{% url 'userapp:account' pk=user.pk %}">Просмотреть аккаунт</a></p>
         <a href="{% url 'userapp:logout' %}">Выйти</a>
     {% else %}
         <h2>Вы неавторизованы на нашем сайте</h2>
-        <a href="{% url 'userapp:login' %}">Войти</a>
+        <p class="top-title"><a href="{% url 'userapp:login' %}">Войти</a></p>
         <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
     {% endif %}
 
     <h1>This is main page</h1>
 
-    <p><a href="{% url 'shopapp:products-list' %}">Продукты</a></p>
-    <p><a href="{% url 'shopapp:orders-list' %}">Заказы</a></p>
-    <p><a href="{% url 'newsapp:news-list' %}">Новости</a></p>
-    <p><a href="{% url 'blogapp:posts-list' %}">Блог</a></p>
+    <h2><a href="{% url 'shopapp:products-list' %}">Продукты</a></h2>
+    <h2><a href="{% url 'shopapp:orders-list' %}">Заказы</a></h2>
+    <h2><a href="{% url 'newsapp:news-list' %}">Новости</a></h2>
+    <h2><a href="{% url 'blogapp:posts-list' %}">Блог</a></h2>
 
 {% endblock %}
