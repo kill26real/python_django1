@@ -1,24 +1,30 @@
 {% extends 'userapp/base.html' %}
+{% load i18n %}
 
 {% block title %}
     Main Page
 {% endblock %}
 
 {% block body %}
+    <br>
+
     {% if request.user.is_authenticated %}
-        <p class="top-title" ><a href="{% url 'userapp:account' pk=user.pk %}">Просмотреть аккаунт</a></p>
-        <a href="{% url 'userapp:logout' %}">Выйти</a>
+        <p class="top-title" ><a href="{% url 'userapp:account' pk=user.pk %}">{% trans 'Account' %}</a></p>
+        <a href="{% url 'userapp:logout' %}">{% trans 'Log out' %}</a>
     {% else %}
-        <h2>Вы неавторизованы на нашем сайте</h2>
-        <p class="top-title"><a href="{% url 'userapp:login' %}">Войти</a></p>
-        <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
+        <h2>{% trans 'You are not authorized yet' %}</h2>
+        <p class="top-title"><a href="{% url 'userapp:login' %}">{% trans 'Log in' %}</a></p>
+        <a href="{% url 'userapp:register' %}">{% trans 'Register' %}</a>
     {% endif %}
 
-    <h1>This is main page</h1>
+    <br>
 
-    <h2><a href="{% url 'shopapp:products-list' %}">Продукты</a></h2>
-    <h2><a href="{% url 'shopapp:orders-list' %}">Заказы</a></h2>
-    <h2><a href="{% url 'newsapp:news-list' %}">Новости</a></h2>
-    <h2><a href="{% url 'blogapp:posts-list' %}">Блог</a></h2>
+    <h1>{% trans 'This is main page' %}</h1>
+
+    <h2><a href="{% url 'shopapp:products-list' %}">{% trans 'Products' %}</a></h2>
+    <h2><a href="{% url 'shopapp:orders-list' %}">{% trans 'Orders' %}</a></h2>
+    <h2><a href="{% url 'shopapp:index' %}">{% trans 'Shops' %}</a></h2>
+    <h2><a href="{% url 'newsapp:news-list' %}">{% trans 'News' %}</a></h2>
+    <h2><a href="{% url 'blogapp:posts-list' %}">{% trans 'Blog' %}</a></h2>
 
 {% endblock %}

@@ -1,8 +1,30 @@
 from django.contrib import admin
-from .models import Product, Order
+from .models import Product, Order, Sale, Offer, Shop
 from django.http import HttpRequest
 from django.db.models import QuerySet
 from .admin_mixins import ExportAsCSVMixin
+
+
+class ProductShopInline(admin.StackedInline):
+    model = Shop.products.through
+
+
+@admin.register(Sale)
+class SaleAdmin(admin.ModelAdmin):
+    list_display = ['user', 'text']
+
+
+@admin.register(Offer)
+class OfferAdmin(admin.ModelAdmin):
+    list_display = ['user', 'text']
+
+
+@admin.register(Shop)
+class ShopAdmin(admin.ModelAdmin):
+    inlines = [
+        ProductShopInline,
+    ]
+    list_display = ['name', 'adress', 'description']
 
 
 class OrderInline(admin.TabularInline):

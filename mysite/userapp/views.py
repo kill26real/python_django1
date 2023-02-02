@@ -10,6 +10,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from shopapp.models import Sale, Offer, Order
+from django.core.cache import cache
+
 
 
 
@@ -56,6 +59,27 @@ class AccountView(DetailView):
     template_name = 'userapp/account.html'
     model = User
     context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.request.user.username
+
+        sales_cache_key = f'sales:{username}'
+        offers_chache_key = f'offers:{username}'
+        offers = Offer.objects.filter(user=self.object)
+        sales = Sale.objects.filter(user=self.object)
+
+        user_account_cache_data = {
+            sales_cache_key: sales,
+            offers_chache_key: offers
+        }
+
+        cache.set_many(user_account_cache_data)
+
+        context['offers'] = offers
+        context['sales'] = sales
+        context['orders'] = Order.objects.filter(user=self.object)
+        return context
 
 
 class ProfileUpdateView(UpdateView):

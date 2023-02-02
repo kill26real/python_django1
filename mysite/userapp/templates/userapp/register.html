@@ -1,16 +1,17 @@
 {% extends 'userapp/base.html' %}
+{% load i18n %}
 
 {% block title %}
-    Регистрация
+    Registration
 {% endblock %}
 
 
 {% block body %}
-    <h1>Регистрация</h1>
+    <h1>{% trans 'Registrate' %}</h1>
     <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Sign up</button>
+    <button type="submit">{% trans 'Sigh up' %}</button>
     </form>
-    <a href="{% url 'main' %}">Выйти в главное меню</a>
+    <a href="{% url 'main' %}">{% trans 'Back to main' %}</a>
 {% endblock %}

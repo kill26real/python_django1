@@ -22,3 +22,19 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     products = models.ManyToManyField(Product, related_name='orders')
 
+
+class Sale(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(null=False, blank=True)
+
+
+class Offer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(null=False, blank=True)
+
+
+class Shop(models.Model):
+    name = models.CharField(max_length=100)
+    adress = models.TextField(null=False, blank=True)
+    description = models.TextField(null=False, blank=True)
+    products = models.ManyToManyField(Product, related_name='shops')

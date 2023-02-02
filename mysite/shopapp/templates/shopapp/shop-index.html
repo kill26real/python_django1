@@ -1,4 +1,5 @@
 {% extends 'shopapp/base.html' %}
+{% load i18n %}
 
 
 {% block title %}
@@ -6,26 +7,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Hello Shop Index</h1>
-
-    <div>
-    <ul>
-        {% for name, price in products %}
-            <li>{{ name }}({{ name|length }}) for ${{ price }}</li>
-            {% if name|length_is:'5' %}
-                <span>Lucky product!</span>
-            {% endif %}
-        {% empty %}
-            No products here
+    <h1>{% trans 'Our shops: ' %}</h1>
+    {% if shops %}
+        {% for shop in shops %}
+            <h2>{{ shop.name }}</h2>
+            <h4>{{ shop.description }}</h4>
+            <p>{% trans 'Adrress: ' %}{{ shop.adress }}</p>
+            <h4>{% trans 'Products in shop: ' %}</h4>
+            <p>{% for product in shop.products.all %}
+                    <li>{{ product.name }}{% trans ' for $' %}{{ product.price }}</li>
+                {% endfor %}
+            </p>
         {% endfor %}
-    </ul>
-    </div>
-
+    {% else %}
+    <h2>{% trans 'No shops yet' %}</h2>
+    {% endif %}
+    <br>
+    <br>
     <div>
-    Time running: {{ time_running }}
-    </div>
-
-    <div>
-        {% lorem 3 p random %}
+        <a href="{% url 'main' %}">{% trans 'Back to main' %}</a>
     </div>
 {% endblock %}

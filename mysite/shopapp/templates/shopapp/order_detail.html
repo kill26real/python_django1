@@ -1,30 +1,31 @@
 {% extends 'shopapp/base.html' %}
+{% load i18n %}
 
 {% block title %}
     Order #{{ object.pk }} details
 {% endblock %}
 
 {% block body %}
-    <h1>Order #{{ object.pk }}</h1>
-    <p>Order by {% firstof object.user.first_name object.user.username %}</p>
-    <p>Promocode: <code>{{ object.promocode }}</code></p>
-    <p>Delivery address: {{ object.delivery_adress }}</p>
+    <h1>{% trans 'Order #' %}{{ object.pk }}</h1>
+    <p>{% trans 'Order by' %}{% firstof object.user.first_name object.user.username %}</p>
+    <p>{% trans 'Promocode: ' %}<code>{{ object.promocode }}</code></p>
+    <p>{% trans 'Delivery adrress: ' %}{{ object.delivery_adress }}</p>
     <div>
-        Products in order:
+        {% trans 'Products in order: ' %}
         <ul>
             {% for product in object.products.all %}
-                <li>{{ product.name }} for ${{ product.price }}</li>
+                <li>{{ product.name }}{% trans ' for $' %}{{ product.price }}</li>
             {% endfor %}
         </ul>
     </div>
     <div>
-        <a href="{% url 'shopapp:order-update' pk=object.pk %}">Update order</a>
+        <a href="{% url 'shopapp:order-update' pk=object.pk %}">{% trans 'Update order' %}</a>
     </div>
     <div>
-        <a href="{% url 'shopapp:order-delete' pk=object.pk %}">Delete order</a>
+        <a href="{% url 'shopapp:order-delete' pk=object.pk %}">{% trans 'Delete order' %}</a>
     </div>
     
     <div>
-        <a href="{% url 'shopapp:orders-list' %}">Back to orders</a>
+        <a href="{% url 'shopapp:orders-list' %}">{% trans 'Back to orders' %}</a>
     </div>
 {% endblock %}

@@ -30,4 +30,6 @@ urlpatterns = [
     path('news/', include('newsapp.urls')),
     path('blog/', include('blogapp.urls')),
     path('i18n', include('django.conf.urls.i18n')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

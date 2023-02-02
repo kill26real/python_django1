@@ -1,4 +1,6 @@
 {% extends 'userapp/base.html' %}
+{% load cache %}
+{% load i18n %}
 
 {% block title %}
     Account #{{ user.id }}
@@ -6,25 +8,76 @@
 
 {% block body %}
     {% if request.user.is_authenticated %}
-        <h2>Добро пожаловать {% firstof user.first_name user.username %}</h2>
-        <p>День рождения: {{ user.profile.date_of_birth }}</p>
-        <p>Город: {% firstof  user.profile.city 'город не указан' %}</p>
-        <p>Номер телефона: {% firstof  user.profile.phone_number 'номер телефона не указан' %}</p>
-        <p>Новости: {% firstof  user.profile.news 'У вас нет еще новостей' %}</p>
-        {% if user.profile.is_varificied %}
-            <p>Вы верифицированный пользователь</p>
-        {% else %}
-            <p>Вы неверифицированный пользователь</p>
-        {% endif %}
-        <p><a href="{% url 'userapp:user_update' pk=user.id %}">Обновить общие данные профиля</a></p>
-        <p><a href="{% url 'userapp:profile_update' pk=user.profile.id %}">Обновить дополнительные данные профиля</a></p>
+        <h2>{% trans 'Welcome' %}{% firstof user.first_name user.username %}</h2>
+        <table align="center">
+            <thead>
+                <tr>
+                    <th>
+                        {% trans 'Profile data' %}
+                    </th>
+                    <th>
+                        {% trans 'Personal account' %}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                    <p>{% trans 'Birthday date' %}{{ user.profile.date_of_birth }}</p>
+                    <p>{% trans 'City' %}{% firstof  user.profile.city 'город не указан' %}</p>
+                    <p>{% trans 'Phone number' %}{% firstof  user.profile.phone_number 'номер телефона не указан' %}</p>
+                    <p>{% trans 'News' %}{% firstof  user.profile.news 'У вас нет еще новостей' %}</p>
+                    {% if user.profile.is_varificied %}
+                        <p>{% trans 'You are verified' %}</p>
+                    {% else %}
+                        <p>{% trans 'You are not verified' %}</p>
+                    {% endif %}
+                    <p><a href="{% url 'userapp:user_update' pk=user.id %}">{% trans 'Update main data' %}</a></p>
+                    <p><a href="{% url 'userapp:profile_update' pk=user.profile.id %}">{% trans 'Update extra data' %}</a></p>
+                    </td>
+                    <td>
+                        <p>{% trans 'Balance: ' %}{{ user.profile.balance }}$</p>
+                        {% if offers %}
+                            <h4>{% trans 'Our offers' %}</h4>
+                            {% for offer in offers %}
+                                <p>{{ offer.text }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <h4>{% trans 'No offers yet' %}</h4>
+                        {% endif %}
+
+                        {% if sales %}
+                            <h4>{% trans 'Your sales' %}</h4>
+                            {% for sale in sales %}
+                                <p>{{ sale.text }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <h4>{% trans 'No sales yet' %}</h4>
+                        {% endif %}
+
+                        {% if orders %}
+                            <h4>{% trans 'Your orders' %}</h4>
+                            {% cache 600 body %}
+                                {% for order in orders %}
+                                    <p><a href="{% url 'shopapp:order-details' pk=order.pk %}">{% trans 'Order #' %}{{ order.pk }}</a></p>
+                                    <p>{% trans 'Order by' %}{% firstof order.user.first_name order.user.username %}</p>
+                                    <p>{% trans 'Date: ' %}{{ order.created_at }}</p>
+                                {% endfor %}
+                            {% endcache %}
+                        {% else %}
+                            <h4>{% trans 'No orders yet' %}</h4>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <br>
-        <a href="{% url 'userapp:logout' %}">Выйти</a>
+        <a href="{% url 'userapp:logout' %}">{% trans 'Log out' %}</a>
     {% else %}
-        <h2>Вы неавторизованы на нашем сайте</h2>
-        <a href="{% url 'userapp:login' %}">Войти</a>
-        <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
+        <h2>{% trans 'You are not authorized yet' %}</h2>
+        <a href="{% url 'userapp:login' %}">{% trans 'Log in' %}</a>
+        <a href="{% url 'userapp:register' %}">{% trans 'Register' %}</a>
     {% endif %}
     <br>
-    <p><a href="{% url 'main' %}">Выйти в главное меню</a></p>
+    <p><a href="{% url 'main' %}">{% trans 'Back to main' %}</a></p>
 {% endblock %}

@@ -8,6 +8,7 @@ class Profile(models.Model):
     phone_number = models.IntegerField(null=True, blank=True)
     is_verificied = models.BooleanField(default=False)
     news = models.SmallIntegerField(default=0)
+    balance = models.DecimalField(decimal_places=2, max_digits=6)
 
     class Meta:
         permissions = {

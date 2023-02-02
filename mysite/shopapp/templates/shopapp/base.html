@@ -1,21 +1,23 @@
-{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
+{% load i18n %}
 <head>
     <meta charset="UTF-8">
     <title>
         {% block title %}
-        Base Title
+            Base Title
         {% endblock %}
     </title>
     {% if request.user.is_authenticated %}
-        <p><a href="{% url 'userapp:account' pk=user.pk %}">Просмотреть аккаунт</a></p>
-        <a href="{% url 'userapp:logout' %}">Выйти</a>
+        <p><a href="{% url 'userapp:account' pk=user.pk %}">{% trans 'Account' %}</a></p>
+        <a href="{% url 'userapp:logout' %}">{% trans 'Log out' %}</a>
     {% else %}
-        <h2>Вы неавторизованы на нашем сайте</h2>
-        <a href="{% url 'userapp:login' %}">Войти</a>
-        <a href="{% url 'userapp:register' %}">Зарегестрироваться</a>
+        <h2>{% trans 'You are not authorized yet' %}</h2>
+        <a href="{% url 'userapp:login' %}">{% trans 'Log in' %}</a>
+        <a href="{% url 'userapp:register' %}">{% trans 'Register' %}</a>
     {% endif %}
+    <br>
+    <br>
     <form action="{% url 'set_language' %}" method="post">
         {% csrf_token %}
         <input name="next" type="hidden" value="{{ redirect_to }}" >
@@ -24,16 +26,18 @@
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
             {% for language in languages %}
-                <option value="{{ language.code }}" {% if language.code==LANGUAGE_CODE %} selected="selected" {% endif %}>
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
                     {{ language.name_local }} ({{ language.code }})
                 </option>
             {% endfor %}
         </select>
+    <input type="submit" value="go">
     </form>
+    <hr>
 </head>
 <body>
         {% block body %}
-        Base Body
+            Base Body
         {% endblock %}
 
         <br>
