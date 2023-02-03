@@ -61,6 +61,8 @@ class AccountView(DetailView):
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
+        # TODO добавьте проверку того, что id авторизованного пользователя совпадает с pk и если не совпадают,
+        #  и текущий пользователь не суперюзер то бросайте PermissionError
         context = super().get_context_data(**kwargs)
         username = self.request.user.username
 
@@ -75,6 +77,11 @@ class AccountView(DetailView):
         }
 
         cache.set_many(user_account_cache_data)
+        # TODO Как видите, тут выполнено только сохранение данные в кэше, а использования данных из кэша нет. По акциям
+        #  не особенно принципиально какие именно акции, суть задачи в том, чтобы вы попрактиковали составные ключи о
+        #  которых говорится в конце видео-лекции. Правда в лекции это не показано подробно, но смысл такой: первым
+        #  делом смотрим в кеше наличие данных по составному ключу с помощью cache.get_many, если в кэше нужных ключей
+        #  нет, только тогда делаем запросы в базу и сохраняем в кеше с помощью set_many "добытую" информацию
 
         context['offers'] = offers
         context['sales'] = sales
@@ -87,6 +94,7 @@ class ProfileUpdateView(UpdateView):
     fields = ['city', 'date_of_birth', 'phone_number']
     template_name = 'userapp/profile_update_form.html'
 
+    # TODO Аналогично предыдущему - добавьте проверку в метод dispatch
     def get_success_url(self):
         return reverse(
             'userapp:account',
@@ -98,6 +106,7 @@ class UserUpdateView(UpdateView):
     model = User
     fields = ['username', 'first_name', 'last_name', 'email']
     template_name = 'userapp/user_update_form.html'
+
     def get_success_url(self):
         return reverse(
             'userapp:account',

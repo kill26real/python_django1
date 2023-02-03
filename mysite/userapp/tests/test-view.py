@@ -12,8 +12,9 @@ class AccountTest(TestCase):
         Offer.objects.create(text='test text', user_id=user_id)
         Order.objects.create(delivery_adress='test address', promocode='test', user_id=user_id, products=product)
 
-
     def test_order_list(self, user_id):
         response = self.client.get(f'/user/{user_id}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'userapp/account.html')
+    # TODO 1) провеьте что пользователь не может просматривать чужие профили и не может их изменять (что выбрасывается
+    #  PermissionError)
