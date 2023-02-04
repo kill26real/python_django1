@@ -1,0 +1,320 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-02 22:56+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\blogapp\apps.py:8
+msgid "blogapp"
+msgstr "блог"
+
+#: .\blogapp\models.py:7
+msgid "text"
+msgstr "текст"
+
+#: .\blogapp\models.py:8
+msgid "author"
+msgstr "автор"
+
+#: .\blogapp\models.py:9
+msgid "date of publish"
+msgstr "дата публикации"
+
+#: .\blogapp\models.py:11 .\blogapp\models.py:22
+msgid "post"
+msgstr "пост"
+
+#: .\blogapp\models.py:12
+msgid "posts"
+msgstr "посты"
+
+#: .\blogapp\models.py:23 .\blogapp\models.py:25
+msgid "image"
+msgstr "картинка"
+
+#: .\blogapp\models.py:26
+msgid "images"
+msgstr "картинки"
+
+#: .\blogapp\templates\blogapp\base.html:51
+msgid "Today: "
+msgstr "Сегодня: "
+
+#: .\blogapp\templates\blogapp\login-error.html:10
+msgid ""
+"Posts can be created only by authorized users! Please, log in using the link "
+"above"
+msgstr ""
+"Создавать посты могут только авторизованные пользователи! Пожалуйста, "
+"авторизуйтесь по ссылке выше"
+
+#: .\blogapp\templates\blogapp\login-error.html:15
+#: .\blogapp\templates\blogapp\post_detail.html:23
+#: .\blogapp\templates\blogapp\post_form.html:25
+#: .\blogapp\templates\blogapp\upload-posts.html:25
+msgid "Back to posts list"
+msgstr "Вернуться к постам"
+
+#: .\blogapp\templates\blogapp\post_detail.html:15
+#: .\blogapp\templates\blogapp\posts-list.html:13
+msgid "Author: "
+msgstr "Автор: "
+
+#: .\blogapp\templates\blogapp\post_detail.html:16
+msgid "Date of create: "
+msgstr "Дата создания"
+
+#: .\blogapp\templates\blogapp\post_form.html:10
+msgid "Create a new post"
+msgstr "Создать новый пост"
+
+#: .\blogapp\templates\blogapp\post_form.html:16
+msgid "Create"
+msgstr "Создать"
+
+#: .\blogapp\templates\blogapp\posts-list.html:9
+msgid "Posts:"
+msgstr "Посты: "
+
+#: .\blogapp\templates\blogapp\posts-list.html:14
+msgid "Text: "
+msgstr "Текст: "
+
+#: .\blogapp\templates\blogapp\posts-list.html:18
+msgid "Not posts yet"
+msgstr "Ещё нет постов"
+
+#: .\blogapp\templates\blogapp\posts-list.html:22
+msgid "Create new post"
+msgstr "Создать новый пост"
+
+#: .\blogapp\templates\blogapp\posts-list.html:28
+#: .\blogapp\templates\blogapp\upload-posts.html:10
+msgid "Upload post"
+msgstr "Загрузить пост"
+
+#: .\blogapp\templates\blogapp\posts-list.html:34
+#: .\shopapp\templates\shopapp\shop-index.html:28
+#: .\userapp\templates\userapp\account.html:82
+#: .\userapp\templates\userapp\register.html:16
+msgid "Back to main"
+msgstr "Вернуться на главную страницу"
+
+#: .\blogapp\templates\blogapp\upload-posts.html:16
+msgid "Upload"
+msgstr "Загрузить"
+
+#: .\shopapp\templates\shopapp\base.html:12
+#: .\userapp\templates\userapp\main.html:12
+msgid "Account"
+msgstr "Аккаунт"
+
+#: .\shopapp\templates\shopapp\base.html:13
+#: .\userapp\templates\userapp\account.html:75
+#: .\userapp\templates\userapp\main.html:13
+msgid "Log out"
+msgstr "Выйти"
+
+#: .\shopapp\templates\shopapp\base.html:15
+#: .\userapp\templates\userapp\account.html:77
+#: .\userapp\templates\userapp\main.html:15
+msgid "You are not authorized yet"
+msgstr "Вы не авторизованы"
+
+#: .\shopapp\templates\shopapp\base.html:16
+#: .\userapp\templates\userapp\account.html:78
+#: .\userapp\templates\userapp\main.html:16
+msgid "Log in"
+msgstr "Войти"
+
+#: .\shopapp\templates\shopapp\base.html:17
+#: .\userapp\templates\userapp\account.html:79
+#: .\userapp\templates\userapp\main.html:17
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: .\shopapp\templates\shopapp\order_detail.html:9
+#: .\userapp\templates\userapp\account.html:62
+msgid "Order #"
+msgstr "Заказ №"
+
+#: .\shopapp\templates\shopapp\order_detail.html:10
+#: .\userapp\templates\userapp\account.html:63
+msgid "Order by"
+msgstr "Заказчик: "
+
+#: .\shopapp\templates\shopapp\order_detail.html:11
+msgid "Promocode: "
+msgstr "Промокод: "
+
+#: .\shopapp\templates\shopapp\order_detail.html:12
+msgid "Delivery adrress: "
+msgstr "Адрес доставки: "
+
+#: .\shopapp\templates\shopapp\order_detail.html:14
+msgid "Products in order: "
+msgstr "Продукты в заказе: "
+
+#: .\shopapp\templates\shopapp\order_detail.html:17
+#: .\shopapp\templates\shopapp\shop-index.html:18
+msgid " for $"
+msgstr " за $"
+
+#: .\shopapp\templates\shopapp\order_detail.html:22
+msgid "Update order"
+msgstr "Обновить заказ"
+
+#: .\shopapp\templates\shopapp\order_detail.html:25
+msgid "Delete order"
+msgstr "Удалить заказ"
+
+#: .\shopapp\templates\shopapp\order_detail.html:29
+#, fuzzy
+#| msgid "Back to posts list"
+msgid "Back to orders"
+msgstr "Вернуться к постам"
+
+#: .\shopapp\templates\shopapp\shop-index.html:10
+msgid "Our shops: "
+msgstr "Наши магазины: "
+
+#: .\shopapp\templates\shopapp\shop-index.html:15
+msgid "Adrress"
+msgstr "Адресс"
+
+#: .\shopapp\templates\shopapp\shop-index.html:16
+msgid "Products in shop: "
+msgstr "Товары в магазине: "
+
+#: .\shopapp\templates\shopapp\shop-index.html:23
+#, fuzzy
+#| msgid "Not posts yet"
+msgid "No shops yet"
+msgstr "Ещё нет постов"
+
+#: .\userapp\templates\userapp\account.html:11
+msgid "Welcome"
+msgstr "Добро пожаловать! "
+
+#: .\userapp\templates\userapp\account.html:16
+msgid "Profile data"
+msgstr "Данные профиля"
+
+#: .\userapp\templates\userapp\account.html:19
+msgid "Personal account"
+msgstr "Личный кабинет"
+
+#: .\userapp\templates\userapp\account.html:26
+msgid "Birthday date"
+msgstr "Дата рождения"
+
+#: .\userapp\templates\userapp\account.html:27
+msgid "City"
+msgstr "Город: "
+
+#: .\userapp\templates\userapp\account.html:28
+msgid "Phone number"
+msgstr "Номер телефона: "
+
+#: .\userapp\templates\userapp\account.html:29
+#: .\userapp\templates\userapp\main.html:27
+msgid "News"
+msgstr "Новости"
+
+#: .\userapp\templates\userapp\account.html:31
+msgid "You are verified"
+msgstr "Вы верифицированы"
+
+#: .\userapp\templates\userapp\account.html:33
+msgid "You are not verified"
+msgstr "Вы не верефицированы"
+
+#: .\userapp\templates\userapp\account.html:35
+msgid "Update main data"
+msgstr "Обновить общие данные"
+
+#: .\userapp\templates\userapp\account.html:36
+msgid "Update extra data"
+msgstr "Обновить дополнительные данные"
+
+#: .\userapp\templates\userapp\account.html:39
+msgid "Balance: "
+msgstr "Баланс: "
+
+#: .\userapp\templates\userapp\account.html:41
+msgid "Our offers"
+msgstr "Наши предложения: "
+
+#: .\userapp\templates\userapp\account.html:46
+#, fuzzy
+#| msgid "Not posts yet"
+msgid "No offers yet"
+msgstr "Ещё нет постов"
+
+#: .\userapp\templates\userapp\account.html:50
+msgid "Your sales"
+msgstr "Ваши скидки: "
+
+#: .\userapp\templates\userapp\account.html:55
+#, fuzzy
+#| msgid "Not posts yet"
+msgid "No sales yet"
+msgstr "Ещё нет постов"
+
+#: .\userapp\templates\userapp\account.html:59
+msgid "Your orders"
+msgstr "Ваши заказы: "
+
+#: .\userapp\templates\userapp\account.html:64
+msgid "Date: "
+msgstr "Дата: "
+
+#: .\userapp\templates\userapp\account.html:68
+#, fuzzy
+#| msgid "Not posts yet"
+msgid "No orders yet"
+msgstr "Ещё нет постов"
+
+#: .\userapp\templates\userapp\main.html:22
+msgid "This is main page"
+msgstr "Это главная страница"
+
+#: .\userapp\templates\userapp\main.html:24
+msgid "Products"
+msgstr "Продукты"
+
+#: .\userapp\templates\userapp\main.html:25
+msgid "Orders"
+msgstr "Заказы"
+
+#: .\userapp\templates\userapp\main.html:26
+msgid "Shops"
+msgstr "Магазины"
+
+#: .\userapp\templates\userapp\main.html:28
+msgid "Blog"
+msgstr "Блог"
+
+#: .\userapp\templates\userapp\register.html:10
+msgid "Registrate"
+msgstr "Регистрация"
+
+#: .\userapp\templates\userapp\register.html:14
+msgid "Sigh up"
+msgstr "Зарегистрироваться"

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'employmentapp.apps.EmploymentappConfig',
     'newsapp.apps.NewsappConfig',
     'blogapp.apps.BlogappConfig',
+    'rest_framework',
+    'libraryapp.apps.LibraryappConfig',
 ]
 
 MIDDLEWARE = [
@@ -169,3 +171,8 @@ LOGIN_URL = 'news/error/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

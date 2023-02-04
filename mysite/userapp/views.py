@@ -60,9 +60,9 @@ class AccountView(DetailView):
     model = User
     context_object_name = 'user'
 
-    def get_context_data(self, **kwargs):
-        # TODO добавьте проверку того, что id авторизованного пользователя совпадает с pk и если не совпадают,
-        #  и текущий пользователь не суперюзер то бросайте PermissionError
+    def get_context_data(self, pk, **kwargs):
+        if self.request.user.id != pk and not self.request.user.is_staff:
+            raise PermissionError
         context = super().get_context_data(**kwargs)
         username = self.request.user.username
 
@@ -76,13 +76,10 @@ class AccountView(DetailView):
             offers_chache_key: offers
         }
 
-        cache.set_many(user_account_cache_data)
-        # TODO Как видите, тут выполнено только сохранение данные в кэше, а использования данных из кэша нет. По акциям
-        #  не особенно принципиально какие именно акции, суть задачи в том, чтобы вы попрактиковали составные ключи о
-        #  которых говорится в конце видео-лекции. Правда в лекции это не показано подробно, но смысл такой: первым
-        #  делом смотрим в кеше наличие данных по составному ключу с помощью cache.get_many, если в кэше нужных ключей
-        #  нет, только тогда делаем запросы в базу и сохраняем в кеше с помощью set_many "добытую" информацию
+        data = cache.get_many(user_account_cache_data)
 
+        if not data:
+            cache.set_many(user_account_cache_data)
         context['offers'] = offers
         context['sales'] = sales
         context['orders'] = Order.objects.filter(user=self.object)
@@ -94,7 +91,13 @@ class ProfileUpdateView(UpdateView):
     fields = ['city', 'date_of_birth', 'phone_number']
     template_name = 'userapp/profile_update_form.html'
 
-    # TODO Аналогично предыдущему - добавьте проверку в метод dispatch
+    def dispatch(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        if request.user.id != pk and not request.user.is_staff:
+            raise PermissionError
+        return super().dispatch(request, *args, **kwargs)
+
+
     def get_success_url(self):
         return reverse(
             'userapp:account',
