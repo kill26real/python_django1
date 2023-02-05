@@ -44,6 +44,10 @@ class BookList(ListModelMixin, CreateModelMixin, GenericAPIView):
         #         queryset = queryset.filter(pages>pages)
         #     elif comparison == '=':
         #         queryset = queryset.filter(pages=pages)
+        # TODO используйте GET параметры по аналогии с lookup для фильтрации queryset в ОRM: lt, lte, gt, gte и на
+        #  основе этих значений фильтруйте: https://metanit.com/python/django/5.13.php
+        #  Как вариант, есть такой удобный инструмент фильтрации:
+        #  https://django-filter.readthedocs.io/en/latest/guide/rest_framework.html#adding-a-filterset-with-filterset-class
         return queryset
 
 
