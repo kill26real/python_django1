@@ -18,10 +18,28 @@ from django.urls import path, include
 from .views import MainView
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Author and Books API",
+        default_version='v1',
+        description='Описание проекта',
+        terms_of_service='https://www.google.com/politics/terms/',
+        contact=openapi.Contact(email='k.safelkin@mail.ru'),
+        license=openapi.License(name=''),
+    ),
+    public=True,
+    # permission_classes=(permissions.AllowAny),
+)
 
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('shop/', include('shopapp.urls')),
     path('req/', include('requestdataapp.urls')),
@@ -31,6 +49,7 @@ urlpatterns = [
     path('blog/', include('blogapp.urls')),
     path('api/', include('libraryapp.urls')),
     path('i18n', include('django.conf.urls.i18n')),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

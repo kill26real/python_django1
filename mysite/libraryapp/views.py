@@ -4,11 +4,13 @@ from rest_framework.response import Response
 from .models import Book, Author
 from .serializers import BookSerializer, AuthorSerializer
 from rest_framework import status
-from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.generics import GenericAPIView
+from django_filters import rest_framework as filters
 
 
 class AuthorList(ListModelMixin, CreateModelMixin, GenericAPIView):
+    """Представление для получения списка авторов, а также создания новых"""
     serializer_class = AuthorSerializer
 
     def get_queryset(self):
@@ -25,8 +27,36 @@ class AuthorList(ListModelMixin, CreateModelMixin, GenericAPIView):
         return self.create(request)
 
 
+class AuthorDetail(UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericAPIView):
+    """Представление для получения детальной информации, обновления и удаления"""
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
+class BookFilter(filters.FilterSet):
+    min_pages = filters.NumberFilter(field_name="pages", lookup_expr='gte')
+    max_pages = filters.NumberFilter(field_name="pages", lookup_expr='lte')
+    pages = filters.NumberFilter(field_name="pages")
+
+    class Meta:
+        model = Book
+        fields = ['name', 'author', 'pages']
+
+
 class BookList(ListModelMixin, CreateModelMixin, GenericAPIView):
+    """Представление для получения списка книг, а также создания новых"""
     serializer_class = BookSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = BookFilter
 
 
     def get_queryset(self):
@@ -35,19 +65,6 @@ class BookList(ListModelMixin, CreateModelMixin, GenericAPIView):
         name = self.request.query_params.get('name')
         if author and name:
             queryset = queryset.filter(name=name, author=author)
-        # pages = self.request.query_params.get('pages')
-        # comparison = self.request.query_params.get('comparison')
-        # if pages:
-        #     if comparison == '<':
-        #         queryset = queryset.filter(pages<pages)
-        #     elif comparison == '>':
-        #         queryset = queryset.filter(pages>pages)
-        #     elif comparison == '=':
-        #         queryset = queryset.filter(pages=pages)
-        # TODO используйте GET параметры по аналогии с lookup для фильтрации queryset в ОRM: lt, lte, gt, gte и на
-        #  основе этих значений фильтруйте: https://metanit.com/python/django/5.13.php
-        #  Как вариант, есть такой удобный инструмент фильтрации:
-        #  https://django-filter.readthedocs.io/en/latest/guide/rest_framework.html#adding-a-filterset-with-filterset-class
         return queryset
 
 
@@ -56,6 +73,21 @@ class BookList(ListModelMixin, CreateModelMixin, GenericAPIView):
 
     def post(self, request, format=None):
         return self.create(request)
+
+
+class BookDetail(UpdateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericAPIView):
+    """Представление для получения детальной информации, обновления и удаления"""
+    queryset = Book.objects.all()
+    serializer_class = AuthorSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
 # class AuthorList(APIView):
 #     def get(self, request):

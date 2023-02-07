@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'blogapp.apps.BlogappConfig',
     'rest_framework',
     'libraryapp.apps.LibraryappConfig',
+    'django_filters',
+    'django.contrib.admindocs',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -174,5 +177,8 @@ MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 100,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
 }
