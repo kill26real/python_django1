@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .models import News, Comment
 from django.contrib import admin
 from .models import News, Comment
 from django.http import HttpRequest
 from django.db.models import QuerySet
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-
 
 
 # my_group = Group.objects.get(name='Пользователи')
@@ -38,11 +36,9 @@ def mark_published(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset:
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'user']
-    actions = [mark_published,]
-
+    actions = [mark_published, ]
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['id', 'text', 'user']
-

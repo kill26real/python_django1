@@ -28,7 +28,6 @@ class Comment(models.Model):
     published_at = models.DateTimeField(verbose_name='Дата публикации', auto_now_add=True)
     new = models.ForeignKey(News, on_delete=models.CASCADE)
 
-
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
@@ -40,4 +39,3 @@ class Comment(models.Model):
         if len(str(self.text)) < 48:
             return self.text
         return str(self.text)[:48] + '...'
-
