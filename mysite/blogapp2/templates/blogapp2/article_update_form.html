@@ -1,0 +1,26 @@
+{% extends 'blogapp2/base.html' %}
+
+
+{% block title %}
+    Update article
+{% endblock %}
+
+{% block body %}
+    <h1>Update article</h1>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                Update
+            </button>
+
+        </form>
+    </div>
+
+    <div>
+        <a href="{% url 'blogapp2:article-details' pk=object.pk %}">
+            Back to article #{{ object.pk }}
+        </a>
+    </div>
+{% endblock %}

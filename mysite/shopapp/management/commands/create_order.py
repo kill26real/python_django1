@@ -12,10 +12,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('create order with products')
         user = User.objects.get(username='kill_real')
-        products: Sequence[Product] = Product.objects.all()
+        # products: Sequence[Product] = Product.objects.defer('description', 'price', 'created_at').all() defer-кроме
+        products: Sequence[Product] = Product.objects.only('id').all()
         order, created = Order.objects.get_or_create(
             delivery_adress='ul Ivanova 23',
-            promocode='promo1',
+            promocode='promo3',
             user=user,
         )
         for product in products:

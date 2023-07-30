@@ -1,0 +1,18 @@
+{% extends 'blogapp2/base.html' %}
+
+{% block title %}
+    Login error
+{% endblock %}
+
+{% block body %}
+
+    <h3>Cоздавать посты могут только авторизованные пользователи! Пожалуйста авторизируйтесь по ссылке выше </h3>
+    <br>
+    <br>
+    <div>
+        <a href="{% url 'blogapp2:articles-list' %}">
+            Вернуться к постам
+        </a>
+    </div>
+
+{% endblock %}
