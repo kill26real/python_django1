@@ -25,6 +25,8 @@ class ProductForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
+    products = forms.ModelMultipleChoiceField(queryset=Product.objects, widget=forms.CheckboxSelectMultiple(),
+                                          required=True)
     class Meta:
         model = Order
         fields = 'user', 'delivery_adress', 'promocode', 'products'

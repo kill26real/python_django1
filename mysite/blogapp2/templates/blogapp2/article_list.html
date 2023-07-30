@@ -5,19 +5,18 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Articles:</h1>
     {% if object_list %}
         <div>
             {% for article in object_list %}
-                <p><a href="{% url 'blogapp2:article-details' pk=article.pk %}">Article #{{ article.pk }}</a></p>
-                <p>Article by {{ article.author.name }}</p>
+                <h1><a href="{% url 'blogapp2:article-details' pk=article.pk %}">{{ article.title }}</a></h1>
+                <h2>Article by {{ article.author.name }}</h2>
                 <div>
                     <div>Date of publishing: {{ article.pub_date }}</div>
                     <div>Author: {{ article.author }}</div>
                     <div>Category: {{ article.category }}</div>
                     {% if article.tags %}
                     <div>
-                        {% for tag in article.tags %}
+                        {% for tag in article.tags.all %}
                         <li>{{ tag.name }}</li>
                         {% endfor %}
                     </div>
@@ -25,11 +24,14 @@
                     <h3>No tags yet</h3>
                     {% endif %}
                 </div>
+            <br>
+            <br>
             {% endfor %}
         </div>
     {% else %}
         <h3>No articles yet</h3>
     {% endif %}
+    <br>
     <div>
         <a href="{% url 'blogapp2:article-create' %}">
             Create a new article

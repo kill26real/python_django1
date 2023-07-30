@@ -8,38 +8,53 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.views import View
 
 
+# class ArticlesListView(ListView):
+#     template_name = 'blogapp2/article_list.html'
+#     queryset = Article.objects.filter(archivated=False)
+#     context_object_name = 'articles'
+
+
 class ArticlesListView(ListView):
-    template_name = 'blogapp2/articles_list.html'
-    queryset = Article.objects.filter(archivated=False)
-    context_object_name = 'articles'
+    queryset = (
+        Article.objects
+        .defer('content')
+        .select_related('author', 'category')
+        .prefetch_related('tags')
+    )
+
 
 class ArticleDetailsView(DetailView):
     template_name = 'blogapp2/article_details.html'
     model = Article
-    context_object_name = 'product'
+    context_object_name = 'article'
 
 
-class ArticleCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/blog2/login-error/'
-    redirect_field_name = 'redirect_to'
+# class ArticleCreateView(LoginRequiredMixin, CreateView):
+#     login_url = '/blog2/login-error/'
+#     redirect_field_name = 'redirect_to'
+#     model = Article
+#     form_class = ArticleForm
+#
+#
+#     def form_valid(self, form):
+#         if self.request.user.id:
+#             form.instance.author = self.request.user.username
+#             form.save()
+#             return HttpResponseRedirect(reverse_lazy('blogapp2:articles-list'))
+#         else:
+#             return redirect(reverse('blogapp2:login-error'))
+
+class ArticleCreateView(CreateView):
     model = Article
     form_class = ArticleForm
+    success_url = reverse_lazy('blogapp2:articles-list')
 
 
-    def form_valid(self, form):
-        if self.request.user.id:
-            form.instance.author = self.request.user.username
-            form.save()
-            return HttpResponseRedirect(reverse_lazy('blogapp2:articles-list'))
-        else:
-            return redirect(reverse('blogapp2:login-error'))
-
-
-class LoginErrorView(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
-        context = {
-        }
-        return render(request, 'blogapp2/login-error.html', context=context)
+# class LoginErrorView(View):
+#     def get(self, request: HttpRequest) -> HttpResponse:
+#         context = {
+#         }
+#         return render(request, 'blogapp2/login-error.html', context=context)
 
 
 class ArticleUpdateView(UpdateView):

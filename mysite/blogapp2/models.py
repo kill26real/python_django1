@@ -6,11 +6,20 @@ class Author(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField(null=False, blank=True)
 
+    def __str__(self):
+        return self.name
+
 class Category(models.Model):
     name = models.CharField(max_length=40)
 
+    def __str__(self):
+        return self.name
+
 class Tag(models.Model):
     name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
 
 
 class Article(models.Model):
@@ -22,8 +31,8 @@ class Article(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name='articles')
     archivated = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Article # (pk={self.pk}, title:{self.title}'
+        return f'Article #{self.pk}'

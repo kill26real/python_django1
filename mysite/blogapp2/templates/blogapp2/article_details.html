@@ -7,26 +7,25 @@
 
 {% block body %}
     <h1><strong>{{ article.title }}</strong></h1>
+    <br>
     <div>
-        <h2>Content: <em>{{ article.content }}</em></h2>
+        <h2>{{ article.content }}</h2>
         <br>
         <div>Date of Publicate: {{ article.pub_date }}</div>
         <div>Author: {{ article.author }}</div>
         <div>Category: {{ article.category }}</div>
         {% if article.tags %}
         <div>
-            {% for tag in article.tags %}
-                <li>{{ tag.name }}</li>
+            {% for tag in article.tags.all %}
+                <li>{{ tag }}</li>
             {% endfor %}
         </div>
         {% else %}
         <h3>No tags yet</h3>
         {% endif %}
     </div>
-    <div>
-        <a href="{% url 'blogapp2:article-update' pk=article.pk %}">Update article</a>
-    </div>
-
+    <br>
+    <br>
     <div>
         <a href="{% url 'blogapp2:articles-list' %}">Back to articles list</a>
     </div>

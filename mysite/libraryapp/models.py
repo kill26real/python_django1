@@ -16,5 +16,5 @@ class Book(models.Model):
     description = models.TextField(null=False, blank=True)
     ibsn = models.IntegerField(default=0)
     pages = models.IntegerField(default=10)
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
 
