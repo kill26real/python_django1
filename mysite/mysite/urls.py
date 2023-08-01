@@ -33,9 +33,7 @@ schema_view = get_schema_view(
         license=openapi.License(name=''),
     ),
     public=True,
-    # permission_classes=(permissions.AllowAny),
-    # TODO ошибка в том, что вы указали одно значение (сами по себе одни лишь круглые скобки не создают кортежа),
-    #  а требуется список - замените круглые скобки на квадратные)
+    permission_classes=[permissions.AllowAny],
 )
 
 
@@ -56,3 +54,18 @@ urlpatterns = [
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+if settings.DEBUG:
+    urlpatterns.extend(
+        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    )
+
+    urlpatterns.extend(
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    )
+
+    urlpatterns.append(
+        path('__debug__/', include('debug_toolbar.urls')),
+    )
