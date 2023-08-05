@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 class Product(models.Model):
     class Meta:
@@ -14,6 +16,10 @@ class Product(models.Model):
 
     def __str__(self):
         return f'Product(pk={self.pk}, name={self.name!r}'
+
+    def get_absolut_url(self):
+        return reverse('shopapp:product-details', kwargs={'pk': self.pk})
+
 
 class Order(models.Model):
     delivery_adress = models.TextField(null=False, blank=True)

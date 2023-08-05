@@ -10,12 +10,11 @@
             {% for article in object_list %}
                 <h1><a href="{% url 'blogapp2:article-details' pk=article.pk %}">{{ article.title }}</a></h1>
                 <h2>Article by {{ article.author.name }}</h2>
-                <div>
                     <div>Date of publishing: {{ article.pub_date }}</div>
-                    <div>Author: {{ article.author }}</div>
+                    <div>Author: {{ article.author }} </div>
                     <div>Category: {{ article.category }}</div>
                     {% if article.tags %}
-                    <div>
+
                         {% for tag in article.tags.all %}
                         <li>{{ tag.name }}</li>
                         {% endfor %}
@@ -23,7 +22,7 @@
                     {% else %}
                     <h3>No tags yet</h3>
                     {% endif %}
-                </div>
+                </d>
             <br>
             <br>
             {% endfor %}

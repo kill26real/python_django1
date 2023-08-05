@@ -41,8 +41,8 @@ SECRET_KEY = 'django-insecure-_7g1w7s*@+j!s*7$va6&t(=s^6&so2idmmf7s78@m%o7f$bmjd
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '0.0.0.0'
-    '127.0.0.1'
+    # '0.0.0.0'
+    # '127.0.0.1'
 ]
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -65,18 +65,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+
     'shopapp.apps.ShopappConfig',
     'requestdataapp.apps.RequestdataappConfig',
     'userapp.apps.AppusersConfig',
     'employmentapp.apps.EmploymentappConfig',
     'newsapp.apps.NewsappConfig',
     'blogapp.apps.BlogappConfig',
+    'blogapp2.apps.Blogapp2Config',
+
     'rest_framework',
     'libraryapp.apps.LibraryappConfig',
     'django_filters',
     'django.contrib.admindocs',
     'drf_yasg',
-    'blogapp2.apps.Blogapp2Config',
+
 ]
 
 MIDDLEWARE = [

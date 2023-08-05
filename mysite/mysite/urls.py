@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import sitemaps
 
 
 schema_view = get_schema_view(
@@ -51,6 +53,12 @@ urlpatterns = [
     path('api/', include('libraryapp.urls')),
     path('i18n', include('django.conf.urls.i18n')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+    path(
+        'sitemap.xml',
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap',
+    )
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
